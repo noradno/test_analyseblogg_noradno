@@ -1,0 +1,59 @@
+---
+title: Trender i norsk klimafinansering
+format: html
+embed-resources: false
+author: 
+  - name: Einar Tornes
+date: 2024-11-11
+categories: 
+  - bistand
+  - statistikk
+  - klima
+bibliography: library.bib
+---
+
+*Einar Tornes er statsviter og seniorrådgiver i seksjon for statistikk og analyse.*
+
+Verden samles nå til klimatoppmøtet COP29 i Baku, hvor et sentralt punkt på agendaen er å etablere et nytt globalt mål for finansiering til lavutslippsutvikling og klimatilpasning i utviklingsland. Her gis et innblikk i Norges klimafinansiering.
+
+I 2022 innfridde de utviklede landene for første gang målet om å mobilisere 100 milliarder dollar årlig i klimafinansiering til utviklingsland, to år forsinket [@oecd2024climate] . Dette innlegget fokuserer på norsk klimafinansiering de siste årene, frem til og med 2023.
+
+For å kartlegge og tallfeste norsk klimafinansiering til utslippsreduksjon og klimatilpasning i utviklingsland, benyttes klassifiseringer og metoder fra OECD og FNs klimakonvensjon.[^1] Klimafinansiering omfatter både offentlig utviklingsfinansiering og privat kapital mobilisert gjennom offentlige virkemidler. Norges offentlige klimafinansiering forvaltes primært av Norad, Utenriksdepartementet (UD), Klima- og miljødepartementet (KLD), Norfund og Klimainvesteringsfondet. Privat kapital mobiliseres gjennom privatsektorinstrumenter, hovedsakelig investeringer og lån, som forvaltes av Norfund og Klimainvesteringsfondet. Offentlig klimafinansiering dekkes hovedsakelig over bistandsbudsjettet, med unntak av Norfund og Klimainvesteringsfondet, som i tillegg til å motta årlige kapitalinnskudd over bistandsbudsjettet også finansierer klimainvesteringer med avkastning fra investeringsporteføljen.
+
+[^1]: Kort metodeomtale: OECDs Rio-markører for utslippsreduksjon og klimatilpasning brukes for å identifisere klimarelevante aktiviteter innenfor offentlig utviklingsfinansiering (ODA og OOF) og mobilsert privat kapital utløst av offentlige intervensjoner. For å beregne klimafinansiering skilles det mellom aktiviteter der klimaformål er enten hovedmål eller delmål. Hvis klima er hovedmålet, regnes 100 % av finansieringen som klimafinansiering, og hvis klima er et delmål, regnes kun 40 % som klimafinansiering. Definisjoner og kriterier for offentlig utviklingsfinansiering (*ODA* og *OOF*) og Riomarkørene *Climate change adaptation* og *Climate change mitigation* for å identifisere aktiviteter med klimaformål er nærmere beskrevet i [OECD DACs veiledning for CRS-rapportering](https://one.oecd.org/document/DCD/DAC/STAT(2020)44/FINAL/en/pdf). En separat beregningsmetode fra OECD brukes for å identifisere og tallfeste hvor mye av Norges kjernestøtte til multilaterale organisasjoner som er klimaspesifikk, kalt [imputed multilateral climate shares](https://one.oecd.org/document/DCD/DAC/STAT(2023)32/REV1/en/pdf). Norsk offentlig klimafinansiering måles i brutto utbetalinger, noe som innebærer at salg, tilbakebetalinger på lån, utbytte og renteinntekter er utelatt. Mobilisert privat kapital måles i kommitteringer. OECDs metode for måling av mobilisert privat kapital brukes for å beregne tilskrevet (attribuert) privat kapital for hver involverte offentlige aktør, som Norfund/Klimainvesteringsfondet og offentlige utviklingsfinansieringsinstitusjoner i andre land. Et sentralt prinsipp er å unngå dobbeltelling av mobilisering. Metoden er avgrenset til å måle direkte mobilisering og skiller mellom ulike finansieringsinstrumenter og risikonivåer for å tilskrive mobilisering fra hver offentlig aktør, og metoden er nærmere beskrevet i [OECD DACs veiledning for CRS-rapportering](https://one.oecd.org/document/DCD/DAC/STAT(2020)44/FINAL/en/pdf).
+
+## Betydelig økning i klimafinansiering de siste årene
+
+Norsk klimafinansiering har økt betydelig de siste årene, som kan ses i sammenheng med Norges forpliktelse fra klimatoppmøtet i Glasgow i 2021 om å doble den årlige klimafinansieringen fra syv milliarder kroner i 2020 til 14 milliarder kroner innen 2026, samt å minst tredoble støtten til klimatilpasning innenfor dette. Doblingsmålet ble nådd for første gang i 2022, og i 2023 var norsk klimafinansiering på 16,6 milliarder kroner.
+
+![Norsk klimafinansiering har økt betydelig de siste årene. Norfund og Klimainvesteringsfondets investeringer og mobilisering av private investeringer har bidratt med den største veksten.](total_climate_finance.svg){#fig-total_climate_finance}
+
+Økningen i norsk klimafinansiering er drevet av både økt offentlig finansiering og mer mobilisert privat kapital. Norfund og Klimainvesteringsfondets investeringer og mobilisering av private investeringer har bidratt med den største veksten. Klimainvesteringsfondet mobiliserte over 5,6 milliarder kroner privat kapital i 2022, som var fondets første operative år. Det var også en økning i utviklede lands samlede mobilisering av privat klimafinansiering i 2022, etter flere år med tilnærmet stagnasjon [@oecd2024climate].
+
+I 2022–23 utgjorde investeringer og mobilisering fra Norfund og Klimainvesteringsfondet rundt halvparten av total klimafinansiering, en betydelig økning fra tidligere år. Dette representerer en endring i sammensetningen av finansieringen, med en økt andel privatsektorinstrumenter (investeringer, lån, garantier osv.). Samtidig har den mer «tradisjonelle» tilskuddsfinansierte klimafinansieringen fra Norad, UD og KLD hatt en jevn økning, og norsk offentlig klimafinansiering er mer tilskuddsfinansiert enn utviklede land samlet sett. Offentlige investeringer og privat mobilisering forventes å variere mer fra år til år enn tilskuddsfinansiert klimafinansiering, som gjør klimafinansiering utfordrende å forutsi.
+
+## Klimatilpasning og utslippsreduksjon
+
+Norsk klimafinansiering omfatter et bredt spekter av aktiviteter, men er hovedsakelig rettet mot reduksjon av klimagassutslipp fra avskoging, fornybar energi og klimatilpasning. @fig-climate_objective viser klimafinansiering etter formål, til utslippsreduksjon, tilpasning eller begge deler («tverrgående»). Klimafinansiering med uspesifisert formål i figuren representerer kjernestøtte til multilaterale organisasjoner. Andelen av denne støtten som går til tilpasning og utslippsreduksjon er ikke kjent for 2023, men i 2021 og 2022 var mest til klimatilpasning.[^2]
+
+[^2]: Fordelingen av multilateral kjernestøtte til tilpasning, tverrgående og utslippsreduksjon var henholdsvis 768 millioner, 160 millioner og 661 millioner kroner i 2021, og 1,0 milliard, 372 millioner og 767 millioner kroner i 2022.
+
+![Figuren viser klimafinansiering etter formål – til utslippsreduksjon, tilpasning eller begge deler. I likhet med de utviklede landene samlet sett er hoveddelen av norsk klimafinansiering rettet mot utslippsreduksjon.](climate_objective.svg){#fig-climate_objective}
+
+I likhet med de utviklede landene samlet sett er hoveddelen av norsk klimafinansiering rettet mot utslippsreduksjon [@OECD2023]. Økte investeringer og mobilisering av privat kapital til fornybar energi fra Norfund og Klimainvesteringsfondet er hovedforklaringen på den betydelige veksten til utslippsreduksjon de siste årene. Støtten til klimatilpasning har også økt markant, i tråd med det politiske målet om en tredobling fra 2020-nivået. Støtten til klimatilpasning består i all hovedsak av tilskuddsfinansierte midler fra Norad, UD og KLD. En stor del av økningen i 2023 var ettårig støtte gjennom [Sør-pakken](https://www.regjeringen.no/no/aktuelt/dep/smk/pressemeldinger/2023/bred-politisk-enighet-om-flerarig-ukraina-program/politisk-avtale-om-stotte-til-ukraina-og-utviklingsland-rammet-av-krigens-globale-ringvirkninger/id2963375/), som ble etablert for å dempe de negative ringvirkningene av Russlands angrepskrig mot Ukraina. For å måle oppfølgingen av tredoblingsmålet for klimatilpasning benytter norske myndigheter en spesifikk metode, som ikke direkte tilsvarer beløpene i figuren.
+
+I 2023 mottok Afrika mest offentlig klimafinansiering fra Norge, etterfulgt av Asia og Amerika, og økningen de siste årene har hovedsakelig vært rettet mot Afrika og Asia. Finansieringen til Asia og Amerika er primært orientert mot utslippsreduksjon gjennom Norfund og Klimainvesteringsfondets investeringer i fornybar energi og Klima- og skogsatsingen. I Afrika er det en høyere andel til klimatilpasning, med en særlig høy andel i 2023 grunnet Sør-pakken. En betydelig del av finansieringen er kategorisert "geografisk uspesifisert", som er til aktiviteter på tvers av regioner. Når det gjelder mobilisert privat klimafinansiering i 2023, var mest til India, Zambia og Sør-Afrika.
+
+![I 2023 mottok Afrika mest offentlig klimafinansiering fra Norge, etterfulgt av Asia og Amerika.](climate_map.svg){#fig-climate_map}
+
+## Hovedsakelig klimatilpasning til lavinntektsland og utslippsreduksjon til mellominntektsland
+
+Det er tydelige forskjeller i hvilke land som mottar finansiering til klimatilpasning og utslippsreduksjon etter inntektsnivå.[^3] Størstedelen av midlene til klimatilpasning er tilskuddsfinansiering til lavinntektsland, som ofte er mest sårbare for klimaendringer, og har begrensede ressurser til å tilpasse seg. Majoriteten av finansieringen til utslippsreduksjon er til mellominntektsland, som også samsvarer med samlet offentlig klimafinansiering fra utviklede land, og er hovedsakelig drevet av Norfund, Klimainvesteringsfondet og Klima- og skogsatsingen.
+
+[^3]: Vær imidlertid oppmerksom på at figur ikke viser landfordelingen av all offentlig klimafinansiering, da aktiviteter rettet mot flere mottakerland er kategorisert som «Ikke landspesifisert». I tillegg er kjernestøtte til multilaterale organisasjoner utelatt.
+
+![Det er tydelige forskjeller i hvilke land som mottar finansiering til klimatilpasning og utslippsreduksjon basert på inntektsnivå.](climate_finance_type_income.svg){#fig-climate_finance_type_income}
+
+Klimafinansieringen fra Norfund og Klimainvesteringsfondet er rettet mot lavere og høyere mellominntektsland. Til sammenligning mottar lavinntektsland en betydelig andel av øvrig offentlig tilskuddsfinansiert klimafinansiering. En vedvarende utfordring i internasjonal klimafinansiering er å øke investeringer og mobilisering i de fattigste landene [@OECD2023_mobilisation].
+
+Les [@oecd2024climate] for en status på de utviklede landenes samlede innstats frem til 2022 mot 100-milliardersmålet.
