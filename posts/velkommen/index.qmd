@@ -1,0 +1,24 @@
+---
+title: Velkommen til Norads analyseblogg!
+format: html
+#image: 
+author: 
+  - name: Katrine Heggedal
+  - name: Håvard Mokleiv Nygård
+date: 2023-10-17
+---
+Norad lanserer nå sitt nye vindu mot verden: en analyseblogg for utvikling og bistand. Med det håper vi å fylle et vakuum i grenseflaten mellom forskning, policy og kommunikasjon om utviklingsagendaen. Hva kan du som leser forvente?
+
+*Katrine Heggedal er statsviter og leder for Norads seksjon for statistikk og analyse. Håvard Mokleiv Nygård er statsviter (ph.d) og Norads kunnskapsdirektør.*
+
+## Velkommen til Norads analyseblogg!
+
+Norad lanserer nå sitt nye vindu mot verden: en analyseblogg for utvikling og bistand. Med det håper vi å fylle et vakuum i grenseflaten mellom forskning, policy og kommunikasjon om utviklingsagendaen. Det fins enorme mengder data og forskning om bærekraftig utvikling, utviklingsøkonomi, og utviklingsfinansiering, relevant for Norads oppgave med å forvalte norsk bistand, for norsk utviklingspolitikk og for internasjonalt utviklingssamarbeid. Med denne bloggen vil vi løfte frem aktuelle problemstillinger, ny forskning og data, og gjøre det mer tilgjengelig for folk som er interesserte i bistand og utviklingsspørsmål, og for de som jobber med det -- på ulike måter og i ulike roller. Med dette vil vi også bidra til utveksling og diskusjon om sentrale tema for bistanden.
+
+## Hva kan du som leser forvente?
+
+Dette er en *analyse*blogg, med fokus på statistisk analyse, utviklingsøkonomi, tall på utviklingsfinansiering og klimafinansering, og grunnleggende økonomisk statistikk. Innleggene vil være fokusert om bistands- og utviklingstematikk, men også analyse av global økonomi og globale trender og utviklingstrekk som er sentrale for å forstå situasjonen og utsiktene for verdens fattige, og for utviklingsagendaen bredere. Innleggene i bloggen vil være korte, data- og forskningsbaserte og klare og poengterte. Det tror vi at du som opplyst og travel leser setter pris på. Så kan vi gjerne ta videre diskusjon om forutsetninger og konklusjoner, eller om spørsmål og dilemmaer innleggene reiser eller trigger -- i kommentarfeltet under innleggene, eller på andre arenaer.
+
+**Spørsmål, kommentarer eller ideer til innlegg?**
+
+Kontakt [norad-statistikk.og.analyse\@norad.no](mailto:norad-statistikk.og.analyse@norad.no).

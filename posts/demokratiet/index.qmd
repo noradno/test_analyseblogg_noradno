@@ -1,0 +1,41 @@
+---
+title: Hva får vi egentlig ut av demokratiet?
+format: html
+bibliography: library.bib
+author: 
+  - name: Nikolai Hegertun
+date: 2023-10-27
+date-modified: 2023-11-03
+categories:
+  - demokrati
+  - afrika
+---
+Det spørsmålet kan få svært ulike tolkninger og svar avhengig av hvor i verden du befinner deg, og hvilket utgangspunkt du har. I Afrika ser man en økende frustrasjon knyttet til at demokratiet som styreform ikke lever opp til forventningene hos borgerne.
+
+*Nikolai Hegertun er statsviter og seniorrådgiver i seksjon for statistikk og analyse.*
+
+I følge filosofen Hannah Arendt går veien til et totalitært samfunn via en stadig erosjon og avvikling av et lands politiske fellesskap. Ettersom et fritt og pluralistisk politisk fellesskap er nødt til å spille seg ut i det offentlige rom er dette igjen tuftet på en knesetting av politiske og sivile rettigheter. Uten dette vil det totalitæres ensretting og stadige forsøk på å ekskludere andre grupper, individer og meninger til slutt ta overhånd. Kort sagt, et inkluderende politisk fellesskap -- som ikke reduserer individene til «massesubjekter» eller nyttige brikker i et totalitært maskineri, enten dette er «den ariske rase» eller «proletariatet» -- er en forutsetning for demokrati [@arendt2017].
+
+Hannah Arendt var trolig en av historiens skarpeste kritikere av anti-demokratiske tendenser, selv når disse kunne sies å være nær ufølbare krusninger på vannet. Hennes kompromissløse forståelse av det politiske fellesskapet som skulle ivareta individenes frihet til å uttrykke seg gjorde henne noen ganger svært kontroversiell. Som både jøde og kvinne var det uforståelig for mange at hun var en kritiker av den jødiske staten Israel og feminismen -- men begge deler bunnet i hennes frykt for hvordan selv godt intenderte politiske bevegelser kunne lede til uniformisme og undertrykkelse av andre individer, meninger og grupper [@overenget2001].
+
+Spoler vi frem til vår tid har en annen tenker med en lignende historisk erfaring som Arendt skrevet godt om dagens trusler mot demokratiske prinsipper og det «åpne samfunn». I «Demokratiets Svanesang» påpeker Anne Applebaum hvordan demokrati, konkurranse og meritokratisk tenkning, kan gi svært ulike resultater -- på grunn av både land og menneskers svært ulike utgangspunkt [@applebaum2020twilight]. Demokratiet kan slik sett lang fra tilfredsstille (ja endog være en trussel mot) menneskers behov for samhold og harmoni. Demokratiets kår har blitt enda trangere i en tid der folk ikke bare har forskjellig utgangspunkt og perspektiver, men også forskjellige «fakta», påpeker Applebaum.
+
+Spørsmålet «hva får vi egentlig ut av demokratiet?» kan altså få svært ulike tolkninger og svar avhengig av hvor i verden du befinner deg, og hvilket utgangspunkt du har. I en region som Afrika sør for Sahara, der uttrykket «[you can't eat democracy](https://kenopalo.substack.com/p/you-cant-eat-democracy)» har satt seg, er debatten rundt demokrati vesentlig annerledes enn den man har i Norge eller i USA. I Norge eller USA raser debatten om ytringsfrihet og kanseleringskultur, mens i mange afrikanske land diskuterer man demokratiets evne til å ivareta grunnleggende behov som sikkerhet og sosiale tjenester. Som Zambias president Hakainde Hichilema nylig understreket i en [artikkel i Bloomberg](https://www.bloomberg.com/opinion/articles/2023-03-28/debt-restructuring-is-no-recipe-for-democracy-says-zambia-president-hichilema):
+
+> We cannot simply parrot lines about how democracy is good for citizens. It must be felt.
+
+Hichilema sier at autokratiets tilsynelatende stabiliserende kraft kan virke forførende for unge og fattige demokratier. Også Applebaum skriver om hvordan «autoritarismens tiltrekningskraft er evig». Se for deg situasjonen: du og familien din har levd i fattigdom og utrygghet i årevis, og så kommer det en politisk leder som lover trygghet, gode grunnleggende tjenester og bedre økonomiske muligheter. Prisen er bare at forsamlingsfrihet, ytringsfrihet og demokratisk påvirkning innskrenkes noe. Hva ville du akseptert? Hva er minst tilfredsstillende? Dette er en forenklet og noe karikert fremstilling av en viktig historisk spenning i mange lav- og mellominntektsland. Spenningen oppleves likevel reell.
+
+Den strekker seg ikke minst fra Den kalde krigen og de to blokkenes polariserte syn på menneskerettighetene -- da ledere i Sovjet vektla de økonomiske og sosiale rettighetene, mens Vesten naturligvis orienterte seg mot de politiske og sivile rettighetene. Men også i dagens mer multipolare virkelighet er det tydelige konfliktlinjer og kontroverser rundt ulike utviklingsmodeller på det afrikanske kontinentet. Omdreiningspunktet for disse debattene er ofte styresett og demokrati.
+
+Det afrikanske forskningsinstituttet Afrobarometer viser hvordan holdningene til demokratiet har endret seg i senere år. Demokratiet er fortsatt den [mest populære styringsformen](https://www.afrobarometer.org/articles/declining-satisfaction-threatens-african-democracy-afrobarometer-ceo-reveals/) hos afrikanere flest, men støtten er minkende: 66 prosent av afrikanere foretrekker fortsatt demokrati fremfor andre former for styresett, mot 75 prosent i 2012.
+
+[Ifølge styreleder i Afrobarometer](https://www.afrobarometer.org/articles/afrobarometer-data-show-worrying-trends-for-democracy-in-africa-prof-gyimah-boadi-warns/), E. Gyimah-Boadi ser man en økende frustrasjon knyttet til at demokratiet som styresett ikke lever opp til forventningene til borgerne -- spesielt knyttet til grunnleggende tjenester og muligheter. Påfallende er det at frustrasjonen ikke bare finnes i konfliktområder som Sahel og Afrikas Horn, men også i store regionale maktsentre som [Sør-Afrika](https://www.afrobarometer.org/articles/anc-clings-to-lead-in-a-hypothetical-election-but-south-africans-faith-in-democracy-is-weak/) og [Nigeria](https://www.afrobarometer.org/publication/ad606-nigerians-want-democracy-though-dissatisfaction-rises-amid-worsening-economic-conditions/). Hele 72 prosent av sørafrikanere sier de er villige til å droppe demokratiske valg hvis en ikke-demokratisk regjering kan tilby mer trygghet, arbeidsplasser og styrke boligsituasjonen.
+
+Dette skjer i en tid der Afrika har opplevd en økning i statskupp, hundretusenvis har blitt drept i konfliktene i Etiopia og Sudan og antall fordrevne mennesker på kontinentet har bikket 40 millioner (opp fra rett over 10 millioner i 2010).
+
+I Norads prosjekt «Bistand mot 2030» har vi spurt afrikanske kunnskapsmiljøer i Afrika sør for Sahara hva de anser som [de største utfordringene for regionen](https://www.norad.no/om-bistand/publikasjon/2023/old-problems-and-new-realities-in-africa---and-the-role-of-development-cooperation/). Strukturell økonomisk omstilling, arbeidsplasser, og fungerende institusjoner var gjengangere i diskusjonene. Dette rimer godt med hva som kommer frem i spørreundersøkelser om behov og utfordringer, fra både Afrobarometer og Verdensbanken. Når demokratier fremstår som korrupte eller uansvarlige i møte med enorme levekårsbehov er det ikke rart at mindre demokratiske styresett fremstår som fristende alternativer -- selv om disse langt ifra er noen garanti for [bedre utvikling](https://www.economist.com/leaders/2023/10/05/why-africans-are-losing-faith-in-democracy).
+
+Ettersom bistanden historisk sett har ønsket å fremme både sosioøkonomisk utvikling og et mer verdibasert perspektiv på styreform og demokrati, presser dette frem noen dilemmaer for bistandsaktører. Vi kommer ikke fra at forholdet mellom styreform og utvikling er usedvanlig komplekst og ofte betinget av historiske og institusjonelle faktorer vi ikke kan styre.
+
+*Forsidebilde: Ken Opprann.*

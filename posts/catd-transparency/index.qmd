@@ -1,0 +1,153 @@
+---
+title: "Ny åpenhetsindeks for bistand: Hva måler den, og hvordan skårer norsk bistand?"
+format: html
+bibliography: library.bib
+author: 
+  - name: Eivind Moe Hammersmark
+categories: 
+  - bistand
+  - åpenhet
+date: 2024-01-16
+lightbox: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+En forskningsartikkel publisert i Journal of International Development foreslår en ny metode for å måle åpenhet i bistand, ved å se på hvor lett det er for befolkningen i giverlandet å finne informasjon på bistandsetatenes nettsider. Hva måler den nye åpenhetsindeksen, hvordan korrelerer den med eksisterende indekser, og hvordan skårer norsk bistand?
+
+*Eivind Moe Hammersmark er samfunnsøkonom (ph.d.) og seniorrådgiver i seksjon for statistikk og analyse.*
+
+Det er mange grunner til at åpenhet i bistand ([ODA](https://www.oecd.org/dac/financing-sustainable-development/development-finance-standards/official-development-assistance.htm)) er viktig, blant annet økt tillit, bedre koordinering, og potensielt mer effektiv bistand. Tradisjonelle mål på åpenhet i bistand er som regel basert på hvor mye data som deles med det internasjonale giversamfunnet, og donorenes uttalte forpliktelse til åpenhet. Bernhard Reinsberg og Haley Swedlund argumenterer i en artikkel, publisert i Journal of International Development i fjor, for at åpenhet i bistand først og fremst handler om å øke befolkningens tilgang på informasjon [@reinsberg-swedlund-2023]. Ifølge forfatterne fanger ikke eksisterende indekser opp dette aspektet på en tilfredsstillende måte, og foreslår at man istedet måler åpenhet ved å se på hvor lett det er å finne informasjon på donorenes nettsider. De lanserer derfor sin egen indeks: *Citizen Aid Transparency Dataset (CATD).*
+
+```{r}
+#| label: fig-hist
+#| column: margin
+#| layout-ncol: 1
+#| fig-height: 4
+#| fig-width: 4
+#| fig-cap: "Fordelingen av CATD-skår blant donorer. Kilde: [@reinsberg-swedlund-2023]."
+
+library(tidyverse)
+library(noradplot)
+
+ggnorad()
+
+catd <- read_tsv("CATD_agencies.tab")
+
+catd |> 
+  ggplot() +
+  geom_histogram(aes(t)) +
+  scale_x_continuous(expand = expansion(c(0, 0.1))) +
+  scale_y_continuous(expand = expansion(c(0, 0.1))) +
+  labs(x = "CATD-skår",
+       y = "Antall")
+```
+
+Indeksen er basert på to hovedkategorier av åpenhet: «aid agency governance», som fanger opp åpenhet om donororganisasjonens struktur, strategier og regelverk, og «aid agency practice», som handler om åpenhet om utbetalinger, resultater og evalueringer. Hver av hovedkategoriene består av en rekke aspekter. For «governance» inkluderer dette for eksempel organisasjonskart, ledige stillinger, åpenhetspolicy og kontaktinformasjon. «Practice» består av aspekter som sektor, kanaler, kvalitet og mottakere. I tillegg til ja/nei-vurderinger om hvorvidt informasjon om disse aspektene er tilgjengelig, måles dybden og detaljgraden i informasjonen, samt hvor tilgjengelig den er, målt ved antall klikk som er nødvendig for å laste den ned. De innsamlede dataene oppsummeres til en indeks ved hjelp av såkalt konfirmerende faktoranalyse.[^1]
+
+[^1]: Konfirmerende faktoranalyse er en statistisk metode som forfatterne av CATD bruker til å estimere den underliggende faktoren som best forklarer de observerte åpenhetsaspektene. Se <https://snl.no/faktoranalyse>.
+
+Den resulterende indeksen varierer mellom --1,20 og 1,94, og gjennomsnittlig skår er per konstruksjon lik 0. @fig-hist viser fordelingen av CATD på tvers av donor-etatene i datasettet. @fig-top10-1 viser hvordan de 10 høyest rangerte donororganisasjonene (av totalt 212) skårer på indeksen. EU-kommisjonen og britiske FCDO er høyest rangert, finsk UD er på tredjeplass, mens Norad deler fjerdeplassen med fem andre europeiske etater.[^2] @fig-top10-2 viser hvordan de norske ODA-etatene skårer på indeksen.[^3] Noe av årsaken til at Norad skårer relativt høyt er antagelig at forvaltning og informasjon om bistand er kjerneoppgaver i Norad, til forskjell fra de andre norske etatene. Mye av arbeidet om åpenhet i norsk bistand er dessuten eksplisitt lagt til Norad gjennom innsamling og publisering av [bistandsstatistikk](https://bistandsresultater.no).
+
+[^2]: USAID kommer til sammenligning på en 20.-plass, med en skår på 1,54.
+
+[^3]: Databasen inkluderer også forsvarsdepartementet, GIEK og Innovasjon Norge blant ODA-etater, men disse er ikke vist her.
+
+```{r}
+#| label: fig-top10
+#| column: body-outset
+#| layout-ncol: 2
+#| fig-height: 5
+#| fig-width: 6
+#| fig-cap: "Norads CATD-rangering. Kilde: [@reinsberg-swedlund-2023]. Note: Det globale gjennomsnittet er per konstruksjon lik 0."
+#| fig-subcap:
+#|  - "CATD rangerer Norad på delt fjerdeplass."
+#|  - "De norske ODA-etatene havner stort sett over det globale snittet."
+
+catd |> 
+  slice_max(t, n = 10) |> 
+  mutate(norad = factor(abbreviation == "NOR-NORAD")) |> 
+  ggplot(aes(reorder(abbreviation, t), t, fill = norad)) +
+  scale_fill_norad(palette = "main") +
+  geom_col() +
+  scale_y_continuous(expand = expansion(c(0, 0.1)), 
+                     labels = scales::label_number(decimal.mark = ",")) +
+  coord_flip() +
+  labs(title = "Topp 10 ODA-etater i OECD-landene") +
+  ylab("CATD-skår") +
+  xlab(NULL) +
+  theme(axis.ticks.y = element_blank(), legend.position = "none",
+        plot.title = element_text(margin = margin(b = 15)))
+
+catd |> 
+  filter(country == "Norway",
+         !abbreviation %in% c("NOR-GIEK", "NOR-DEF", "NOR-IN")) |> 
+  mutate(name = case_when(abbreviation == "NOR-FK" ~ "Norec",
+                          abbreviation == "NOR-NORFUND" ~ "Norfund",
+                          abbreviation == "NOR-NORAD" ~ "Norad",
+                          abbreviation == "NOR-ENV" ~ "KLD",
+                          abbreviation == "NOR-MFA" ~ "UD",
+                          abbreviation == "NOR-OAG" ~ "Riksrevisjonen",
+                          .default = name)) |> 
+  ggplot(aes(reorder(name, t), t)) +
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = 0) +
+  scale_y_continuous(labels = scales::label_number(decimal.mark = ",")) +
+  labs(title = "Norske ODA-etater") +
+  ylab("CATD-skår") +
+  xlab(NULL) +
+  theme(axis.line.y = element_blank(), axis.ticks.y = element_blank(),
+        plot.title = element_text(margin = margin(b = 15)))
+
+```
+
+Noe av poenget med den nye indeksen er nettopp å fange opp aspekter ved åpenhet som eksisterende indekser mangler, men man skulle kanskje forvente at land/ODA-etater som tradisjonelt er regnet for å ha høy åpenhet også har god tilgang til informasjon på nettsidene sine. Publish What You Fund sin [*Aid Transparency Index*](https://www.publishwhatyoufund.org/the-index/2022/) (ATI) er mye brukt for å måle åpenhet i bistand. Indeksen tar utgangspunkt i rapporteringen til [IATI](https://iatistandard.org/), men bruker også informasjon fra donorenes nettsider. Den viktigste forskjellen mellom ATI og CATD er (i følge forskerne bak sistnevnte) at ATI primært er rettet mot et internasjonalt publikum, mens CATD måler hvor lett det er for befolkningen i giverlandet å få informasjon om bistand.
+
+@fig-corr viser sammenhengen mellom CATD og ATI i et punktdiagram.[^4] Figuren viser at korrelasjonen mellom de to indeksene er svært lav, kun 0,08. Den lave korrelasjonen er noe overraskende, men kan tyde på at forskerne bak CATD-indeksen har lykkes i å fange opp helt andre aspekter ved åpenhet i bistand enn ATI.
+
+[^4]: Merk at mange av ODA-etatene i CATD finnes ikke i ATI-indeksen, og datagrunnlaget for figuren består derfor bare av 44 etater i 30 land.
+
+Vi ser for øvrig at norsk UD, som den eneste norske ODA-etaten i ATI, skårer relativt sett bedre på CATD enn på ATI. ATI-skåren for Norge er imidlertid basert på en samlet vurdering av Norad og UD, og er derfor ikke direkte sammenlignbar med CATD. Jeg har derfor lagt til et punkt som viser gjennomsnittlig CATD-skår for disse to etatene. Diskrepansen mellom de to indeksene blir da enda større.
+
+Det er vanskelig å si hvilken av åpenhetsindeksene som er mest informativ om faktisk åpenhet. @fig-corr indikerer likevel at det er viktig å være bevisst om at åpenhet i bistand kan bety forskjellige ting for forskjellige målgrupper.
+
+*Citizen Aid Transparency Dataset* er tilgjengelig [her](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/5L0GOP).
+
+```{r}
+#| label: fig-corr
+#| column: body
+#| layout-ncol: 1
+#| fig-height: 4
+#| fig-width: 5
+#| fig-cap: "Korrelasjonen mellom CATD og Aid Transparency Index er svært lav. Kilde: [@reinsberg-swedlund-2023; @ati2022]"
+
+library(ggrepel)
+
+ati <- read_tsv("Other variables.tab") |> 
+  select(ourid, transparencypercent, gk_transparency, ep_transparency, ati_index)
+
+catd_ati <- catd |> 
+  mutate(ourid = ifelse(ourid == "8-1", "8-4", ourid)) |> 
+  group_by(ourid) |> 
+  # alternative NOR-MFA with average value of Norad and MFA
+  mutate(t = ifelse(abbreviation == "NOR-NORAD", mean(t), t)) |> 
+  inner_join(ati, by = "ourid") |> 
+  filter(!is.na(ati_index)) |> 
+  mutate(ud = ourid == "8-4")
+
+# Scatter plot of the CATD and ATI indices
+catd_ati |> 
+  ggplot(aes(t, ati_index, color = ud)) +
+  geom_point() +
+  geom_text_repel(data = filter(catd_ati, iso3 == "NOR"), aes(label = c("UD-Norad", "UD"))) +
+  scale_color_manual(values = as.character(norad_cols()[c(1, 5)])) +
+  labs(title = "CATD og Aid Transparency Index",
+       x = "CATD",
+       y = "ATI") +
+  theme(plot.title = element_text(margin = margin(b = 15)), 
+        legend.position = "none")
+
+```

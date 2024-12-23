@@ -1,0 +1,73 @@
+---
+title: "Seks grunner til å ta fram makroperspektivet i bistanden"
+format: html
+author: 
+  - name: Lars Loe
+categories: 
+  - makro
+  - bistand
+date: 2024-03-15
+number-sections: true
+lightbox: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+Et viktig element i å få mest mulig ut av bistandspengene er å forstå utviklingsdynamikken rundt bistanden, slik at vi kan plassere den riktige bistanden i riktig land gjennom riktig kanal. Det krever inngående kunnskap om det spesifikke området bistanden gjelder, men også at blikket stadig heves ut over tiltaket og til makronivået. Her er seks grunner til å gjøre det siste.
+
+*Lars Loe er samfunnsøkonom og fagdirektør i seksjon for statistikk og analyse.*
+
+## Øremerking kan være illusorisk
+
+Øremerket støtte til en bestemt aktivitet kan gi økt ressursbruk på andre områder enn det som får økt finansiering. Staten i mottakerlandet kan reallokere sin finansiering bort fra området som får øremerket bistand og over til et helt annet. Eller la være å prioritere det i utgangspunktet. Fenomenet har en egen betegnelse: [fungibilitet](https://www.tandfonline.com/doi/epdf/10.1080/01436597.2019.1665012?src=getftr). Mekanismen kan både gi bedre og dårligere totalresultater. Uansett minner den om viktigheten av å heve blikket og se på utvikling i stort.
+
+## Mikro teller -- makro avgjør
+
+Det er grunn til å se utvikling i stort også *uten* mekanismen fra forrige punkt. Det er naturlig nok størst oppmerksomhet om og oppfølging av hvilke resultater som oppnås på tiltaksnivå. Likevel er de bare en del av historien. Et kraftverk, bedre leseferdigheter eller styrket statlig styringsevne gir ringvirkninger og kan ha langvarig veksteffekt langt utover det en måler på tiltaksnivå. Samlet effekt på økonomisk vekst er krevende å måle, men tyngden i forskning tyder på at [den er betydelig](https://www.sciencedirect.com/science/article/pii/S0305750X13003008) og at samlet internasjonal bistand svarer seg som [offentlig investeringsprosjekt](https://www.jstor.org/stable/26365157).
+
+## Se opp for prioriteringsparadokser
+
+Enda et poeng å ha i mente når en har oppmerksomheten på tiltaksnivå er at prioritering av bistandstiltak ut fra et kriterium om størst effekt per krone ikke nødvendigvis leder til best samlet utviklingseffekt. Tenk deg at nasjonale myndigheter i stedet for givere tar ansvar for tiltaket med aller størst effekt per krone. Videre at samlet bistand opprettholdes, men at giverne finansierer noe annet enn tiltaket med best effekt. Da vil resultatoppnåelsen som kan knyttes direkte til bistand framstå mindre. Paradokset er at samlet resultatoppnåelse i landet i dette tilfellet egentlig kan bli større. Grunnen til det siste er at statlig ansvar -- forutsatt at betingelsene er gunstige -- kan gi tilleggseffekter på utvikling gjennom styrking av institusjoner, læring og forholdet mellom stat og folk. Disse effektene fanges vanligvis bare opp i makroøkonomiske effektstudier pekt på i forrige punkt.
+
+## Bistand til staten er også nasjonaløkonomisk støtte
+
+Et poeng som er makroøkonomisk allerede i utgangspunktet er at bistand gis i fremmed valuta. Det betyr at gaveelementet i bistanden gir en økning av landets nasjonalinntekt. Gavebistand til staten øker landets nasjonalinntekt og statens inntekter samtididig. Dette til forskjell fra skatteinntekter som i hovedsak øker statens inntekter ved å trekke inn private inntekter -- det er *omfordeling* av nasjonalinntekt. Poenget er finansielt viktig, uavhengig av at siktemålet med bistanden er å legge grunnlaget for vekst i nasjonalinntekt og skatteinntekter over tid, slik at landet ikke trenger bistand. 
+
+## Bistand kan brukes av staten, men samtidig spares av landet
+
+En måte å klargjøre forrige punkt ytterligere -- også empirisk -- er gjennom begrepsparet [«bruk» (spending) og «absorpsjon» (absorption)](https://www.imf.org/en/Publications/WP/Issues/2016/12/31/The-Spending-and-Absorption-of-Aid-in-PRGF-Supported-Programs-22391). For hva har skjedd hvis staten et år har økt sine utgifter i takt med mottatt bistand uten at det har påvirket netto import? Vi sier da at *staten* har «brukt» bistanden, men *landet* har ikke «absorbert» den. Staten har finansiert utgiftene med nasjonal valuta, tilsynelatende uavhengig av bistand. Bare tilsynelatende, for nasjonens finansielle stilling (netto formue) er styrket ved at bistandsvalutaen ligger igjen i sentralbanken.
+
+## Makroøkonomisk rolle viktigere for noen land enn andre
+
+```{r}
+#| label: fig-figure1
+#| fig-cap: "Kilde: World Development Indicators."
+#| column: margin
+#| fig-width: 3
+#| fig-height: 3
+#| fig-alt: "Søylediagram som viser ODA (bistand) som prosent av brutto nasjonalinntekt, etter landgrupper. Bistand er en langt større del av økonomien i lavinntektsland enn i lavere mellominntektsland, med hhv. 11,5 og 0,8 % av BNI."
+  
+
+library(ggplot2)
+library(noradplot)
+  
+oda_data <- readRDS("oda_data.rds")
+
+ggnorad()
+
+ggplot(oda_data, aes(x = country, y = oda_gni)) +
+  geom_col() +
+  labs(title = "ODA som prosent av BNI",
+       subtitle = "Tall for 2021",
+       x = NULL,
+       y = NULL) +
+  geom_text(aes(label = scales::percent(oda_gni, accuracy = 0.1, decimal.mark = ",")), size = 5, vjust = -0.5) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1), expand = c(0, 0), limits = c(0, 0.14), breaks = seq(0, 0.12, 0.04)) +
+  theme(axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+
+```
+
+Endelig er omfang av bistand i forhold til økonomiens størrelse et nøkkelspørsmål. For gruppen [lavinntektsland](https://blogs.worldbank.org/opendata/new-world-bank-group-country-classifications-income-level-fy24) sett under ett utgjør samlet bistand ([ODA](https://www.oecd.org/dac/financing-sustainable-development/development-finance-standards/official-development-assistance.htm), Official Development Assistance) 11,5 prosent av [nasjonalinntekten](https://www.ssb.no/a/metadata/conceptvariable/vardok/1742/nb) (2021) og er opplagt av makroøkonomisk stor betydning (se @fig-figure1). For gruppen [lavere mellominntektsland](https://blogs.worldbank.org/opendata/new-world-bank-group-country-classifications-income-level-fy24) er tilsvarende andel bare 0,8 prosent. Det er lite i forhold, men selv så små andeler kan ha en finansiell og makroøkonomisk betydning, ikke minst når økonomier er presset. Da spiller finansiell støtte gjennom IMFs programmer og utviklingsbankene en [viktig rolle](https://www.imf.org/external/pubs/ft/wp/2014/wp14202.pdf) for å skape finansiell tillit. Det kan ha større makroøkonomisk betydning enn støttebeløpene sier alene.

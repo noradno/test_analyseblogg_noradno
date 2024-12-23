@@ -1,0 +1,163 @@
+---
+title: "Bistandsstatistikken for 2023 er klar"
+format: html
+#image:
+#bibliography: library.bib
+author: 
+  - name: Katrine Heggedal
+  - name: Geir Johansen
+categories: 
+  - bistand
+  - statistikk
+date: 2024-05-07
+# language:
+#   nb:
+#     crossref-nte-title: "Boks"
+#     crossref-nte-prefix: "Boks"
+lightbox: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+
+---
+Norsk offisiell bistandsstatistikk for 2023 ble publisert 7. mai. Total norsk bistand utgjorde 58,6 milliarder kroner i 2023. Det er et nytt toppnivå for bistanden, og ni milliarder kroner mer enn forrige toppår i 2022.
+
+*Katrine Heggedal er statsviter og leder for Norads seksjon for statistikk og analyse. Geir Johansen er samfunnsøkonom og fagdirektør for statistikk i seksjon for statistikk og analyse.*
+
+```{r, echo=FALSE}
+
+library(noradplot)
+library(ggplot2)
+library(scales)
+library(dplyr)
+library(readxl)
+library(tidyr)
+library(geomtextpath)
+
+ggnorad()
+```
+
+## Norad lanserer bistandsstatistikken for 2023 i dag
+
+Tirsdag 7. mai lanserer Norad offisiell bistandsstatistikk for 2023. Statistikken er tilgjengelig i sin helhet på [Norads statistikk- og resultatportal](https://resultater.norad.no/no). Portalen gir offisiell statistikk over forbruk av norske bistandspenger, fordelt geografisk og på sektorer og partnere. Bistandsstatistikken gir oversikt over norsk bistand til utviklingsland fra 1960 til siste regnskapsår. Her inngår detaljert informasjon om alle bistandsavtaler og finansieringen av dem. Statistikken rapporteres til OECDs utviklingskomité (DAC) som offisiell norsk bistand (ODA). Betegnelsene og kategoriseringene i statistikken følger derfor rapporteringen til OECD.
+
+Vi har i dag publisert rapporten [«Tall som teller – Statistikk over norsk utviklingsbistand i 2023»](https://www.norad.no/tallsomteller2023), hvor gjør vi rede for sentrale tall for 2023 og trender i norsk bistandsfinansering de siste årene. Nedenfor gir vi en liten smakebit på noen hovedtall fra denne rapporten.
+
+## Norsk bistand i tall
+
+**Total norsk bistand utgjorde 58,6 milliarder kroner i 2023.** Det er et nytt toppnivå for bistanden, ni milliarder kroner høyere enn forrige toppnivå i 2022, tilsvarende en oppgang på 18 prosent. Bistanden i 2023 utgjorde 1,09 prosent av Norges bruttonasjonalinntekt (BNI), og Norge var dermed giverlandet som ga mest bistand som andel av BNI.
+
+```{r}
+#| label: fig-figure1
+#| #column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "2023 var et toppår for norsk bistand. Kilde: Norad."
+#| fig-alt: "Søylediagram som viser norsk bistand fra 2014 til 2023."
+#| fig-align: center
+
+total <- read_xlsx("Hovedtall 2023.xlsm", skip = 1, sheet = "Total") |> 
+  filter(`...1` == "Milliarder kroner") |>
+  select(`...1`, as.character(2014:2023)) |> 
+  pivot_longer(cols = -`...1`) |> 
+  select("year" = name, "disbursed_mrd" = value)
+
+palette <- as.character(c(rep(norad_cols("green"), 9), norad_cols("purple")))
+
+ggplot(total, aes(year, disbursed_mrd, fill = year)) +
+  geom_col() +
+  geom_text(aes(vjust = -0.5, label = paste0(format(round(disbursed_mrd, 1), big.mark = " ", decimal.mark = ","))),
+            size = 5) +
+  scale_fill_manual(values = palette) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  labs(title = "Norsk bistand, 2014–2023, løpende priser",
+       subtitle = "Milliarder kroner",
+       x = NULL,
+       y = NULL) +
+  coord_cartesian(clip = "off") +
+  theme(legend.position = "none", plot.margin = margin(15, 15, 15, 15),
+        axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+```
+
+**Krig og kriser preget verden i 2023**, og dette er bakteppet for lanseringen av Norges offisielle bistandsstatistikk under det årlige arrangementet [Tall som Teller, 7. mai 2024](https://www.norad.no/aktuelt/arrangementskalender/2024/tall-som-teller-2024/). Det høye konfliktnivået påvirker også bistanden, noe vi skal ta for oss i et annet blogginnlegg om kort tid.
+
+**Nansen-programmet for Ukraina**, en femåring støttepakke til Ukraina på 75 milliarder kroner, ble vedtatt av Stortinget våren 2023, sammen med en ettårig ekstrabevilgning på 5 milliarder i 2023 til utviklingsland som er særlig rammet av krigens ringvirkninger. Den sivile delen av Nansen-programmet finansieres over bistandsbudsjettet og endte i 2023 opp på 8,7 milliarder kroner, hvorav 7,8 milliarder gikk til Ukraina og nærmere 800 millioner gikk til nabolandet Moldova. Russlands angrepskrig på Ukraina har hatt stor påvirkning på innretningen av den norske og internasjonale bistanden – Ukraina var i 2023 det største mottakerlandet av både norsk og internasjonal bistand for andre år på rad.
+
+**Målt i faste priser**, slik OECD gjerne omtaler tallene, var økningen i den norske bistanden på 30,9 prosent fra 2022 til 2023. Figuren under viser utviklingen målt i faste priser, hvor prisutviklingen i produserte norske varer og tjenester er justert for.[^1] Også målt i faste priser var 2023 et år med rekordhøy norsk bistand.
+
+[^1]: Inflasjonsjusteringen bruker [BNP-deflatoren](https://www.bea.gov/data/prices-inflation/gdp-price-deflator), som måler prisutviklingen på varer og tjenester produsert i Norge.
+
+```{r}
+#| label: fig-figure2
+#| #column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "2023 var et toppår, også når vi inflasjonsjusterer tallene. Kilde: Norad."
+#| fig-alt: "Søylediagram som viser norsk bistand fra 2014 til 2023."
+#| fig-align: center
+#| 
+total <- read_xlsx("Hovedtall 2023.xlsm", skip = 1, sheet = "Total inflasjonsjustert") |> 
+  filter(`...1` == "Milliarder kroner") |>
+  select(`...1`, as.character(2014:2023)) |> 
+  pivot_longer(cols = -`...1`) |> 
+  select("year" = name, "disbursed_mrd" = value) 
+
+palette <- as.character(c(rep(norad_cols("green"), 9), norad_cols("purple")))
+
+ggplot(total, aes(year, disbursed_mrd, fill = year)) +
+  geom_col() +
+  geom_text(aes(vjust = -0.5, label = paste0(format(round(disbursed_mrd, 1), big.mark = " ", decimal.mark = ","))),
+            size = 5) +
+  scale_fill_manual(values = palette) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(title = "Norsk bistand, 2014–2023, faste 2022-priser",
+       subtitle = "Milliarder kroner",
+       x = NULL,
+       y = NULL) +
+  theme(legend.position = "none", plot.margin = margin(15, 15, 15, 15),
+        axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+```
+
+**Norsk bistand tilsvarte 1,09 prosent av norsk bruttonasjonalinntekt (BNI) i 2023.** Dette var en markant økning fra 0,86 prosent i 2022. Med en høyst variabel størrelse som BNI er det vanskelig å treffe eksakt med bistandsbudsjettene mot et mål i et gitt år. Dette blir særlig synlig for en liten åpen økonomi som Norge, gitt hvor stor betydning petroleumsprisene gjennom året har å si for utviklingen for samlet norsk økonomi. Over tiårsperioden 2014-2023 utgjorde bistanden i gjennomsnitt 1,01 prosent av BNI. Til sammenligning har gjennomsnittet for OECD ligget i intervallet 0,30–0,37 prosent i samme periode.
+
+```{r}
+#| label: fig-figure3
+#| #column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Bistand som andel av BNI har holdt seg rundt målet på én prosent det siste tiåret. Kilde: Norad, [OECD](https://www.oecd.org/dac/financing-sustainable-development/development-finance-standards/official-development-assistance.htm)."
+#| fig-alt: "Søylediagram som viser norsk bistand fra 2014 til 2023."
+#| fig-align: center
+#| 
+total <- read_xlsx("Hovedtall 2023.xlsm", skip = 1, sheet = "Andel av BNI") |> 
+  filter(`...1` %in% c("Andel av BNI", "OECD-gjennomsnitt")) |>
+  mutate(across(`2014`:`2023`, as.numeric)) |>
+  select(`...1`, as.character(2014:2023)) |> 
+  pivot_longer(cols = -`...1`) |> 
+  select("variable" = `...1`, "year" = name, value) |> 
+  mutate(lab_y = ifelse(year == max(year), value, NA),
+         year = as.integer(year),
+         variable = ifelse(variable == "Andel av BNI", "Norsk bistand", "OECD-gjennomsnitt"))
+
+ggplot(total, aes(year, value, color = variable, group = variable)) +
+  geom_path() +
+  geom_texthline(yintercept = 1, label = "1-prosentmålet", hjust = 0.1, linetype = "dashed") +
+  geom_text(aes(year, value + 0.1, label = scales::comma(lab_y, decimal.mark = ",")), size = 5,
+            show.legend = FALSE) +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.05)),
+                     breaks = seq(2015, 2023, 2)) +
+  scale_y_continuous(limit = c(0, 1.2), expand = expansion(mult = c(0, 0.1)),
+                     breaks = c(0, 0.2, 0.4, 0.6, 0.80, 1, 1.2),
+                     labels = label_percent(decimal.mark = ",", scale = 1)) +
+  labs(title = "Bistand som andel av brutto nasjonalinntekt (BNI), 2014–2023",
+       subtitle = "Prosentandel av BNI",
+       color = NULL,
+       x = NULL,
+       y = NULL) +
+  theme(legend.position = "right", plot.margin = margin(15, 15, 15, 15))
+
+```

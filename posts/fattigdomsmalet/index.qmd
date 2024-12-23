@@ -1,0 +1,61 @@
+---
+title: Fattigdomsmålet – var ambisjonen for høy eller for lav?
+format: html
+author: 
+  - name: Lars Loe
+categories: 
+  - fattigdom
+  - ulikhet
+date: 2023-10-17
+---
+Verden er kraftig [ute av kurs](https://unstats.un.org/sdgs/report/2022/) for å nå bærekraftsmålene for 2030. Dette gjelder ikke minst det første av dem – å utrydde alle former for fattigdom i hele verden («fattigdomsmålet»). Fattigdomsmålets første delmål er å utrydde all ekstrem fattigdom innen 2030, definert som å leve for under 2,15 USD om dagen. La oss se på tre stiliserte veier til å nå det.
+
+*Lars Loe er samfunnsøkonom og fagdirektør i seksjon for statistikk og analyse.*
+
+## Omfordeling
+
+**Minstepris: 158 milliarder USD eller 0,12 prosent av verdens BNP**. Det er hva som trengs (årlig) dersom en kunne dele ut det eksakte beløpet til de som er under grensen slik at de når fattigdomsgrensen. Hvis OECD-landene -- de tradisjonelle giverne av bistand -- betalte hele regningen, ville beløpet utgjøre 0,26 prosent av deres bruttonasjonalprodukt (BNP).[^1]
+
+[^1]: Til sammenlikning utgjorde samlet offentlig bistand 0,36 prosent av OECD-DAC landenes bruttonasjonalinntekt i 2022. I dette innlegget brukes bruttonasjonalprodukt (i kjøpekraftsjusterte USD). Det betyr en noe annerledes regnemåte, men antyder samme størrelsesorden.
+
+Grunnlaget for anslaget er husholdning- og inntektsstatistikk. Ekstremfattigdom er definert som å leve for under 2,15 USD per dag, en inflasjonsjustering av den opprinnelige «dollar a day» definisjonen.[^2] Statistikken forteller hvor mange som er under fattigdomsgrensene og hvor langt under grensen forbruket eller inntekten deres er.[^3] De ekstremfattige utgjør 8,5 prosent av verdens befolkning, men har et forbruk som utgjør 0,28 prosent av verdens BNP. Hvis alle i denne gruppen levde akkurat på fattigdomsgrensen, ville forbruket øke til 0,4 prosent av verdens BNP.
+
+[^2]: Som alle andre tall i denne posten er dette kjøperaftsjusterte USD. I nominelle USD er både fattigdomsgrensen og tall for inntekt eller BNP lavere i fattige land fordi kjøpekraftsjusteringen korrigerer for at prisnivåene er lavere enn i USA.
+
+[^3]: Slike tall finnes lett tilgjengelig her: [World Development Indicators \| DataBank (worldbank.org)](https://databank.worldbank.org/source/world-development-indicators)
+
+En av forutsetningene for en helt kirurgisk presis eliminering av ekstremfattigdom er at man vet hvem de er og hvor de bor. Fattigdomsstatistikken i fattige land er imidlertid basert på utvalgsundersøkelser som typisk bare omfatter noen tusen husholdninger. Land med stor uformell sektor mangler vårt grunnlag for målretting; ikke minst registerdata med inntekt.   
+
+Selv om en så billig vei til målet derfor er praktisk overambisiøs, forteller tallet om en fordelingsmessig ganske puslete ambisjon; Den vil innebære å øke gjennomsnittlig forbruk for 660 millioner mennesker fra omtrent 1,5 til 2,15 USD om dagen.
+
+## Garantert minsteinntekt
+
+**Makspris: 6076 milliarder USD eller 4,7 prosent av verdens BNP.** En «høyeste pris» kan defineres som det ytre motstykket til perfekt målretting: en garantert minsteinntekt. Alle mennesker får overført 2,15 USD per dag (eller 785 USD per år). Dette er med moderne teknologi (plastkort, mobiltelefoner) teknisk mulig, men vesentlig dyrere. Beløpet øker til 6076 milliarder USD per år. Det tilsvarer 4,7 prosent av verdens BNP.
+
+Reduksjon av beløpet som trengs gjennom en viss avgrensing og målretting er dog lett. Andelene ekstremfattige i høyinntektsland og flere høyere mellominntektsland -- herunder Kina -- er langt under en prosent. Hvis en begrenser minsteinntekten til lav- og mellominntektsland og tar ut Kina, faller beløpet til 4108 milliarder USD eller 3,2 prosent av verdens BNP. En god del flere mellominntektsland kan lett skrelles bort uten at det i særlig grad påvirker antall ekstremfattige som nås.
+
+Dermed illustreres også at en slik tenkt ordning vil kunne kombinere omfordeling mellom mennesker og mellom land. Hvis OECD-landene betalte hele regningen ville det utgjøre 6,7 prosent av deres BNP. En kan imidlertid redusere overføringen til for eksempel en dollar, og slik mer enn halvere utgiften. Ekstremfattigdommen vil i så fall gå kraftig ned selv om den ikke fullstendig elimineres.
+
+Minsteinntekten vil også gå til mennesker som ikke lever i ekstrem fattigdom, inklusive den rike delen av befolkningen. I lav- og mellominntektsland lever 28 prosent av befolkningen for under 3,65 USD om dagen og 56 prosent av befolkningen for under 6,85 USD om dagen. Selv om den primære målgruppa er de om lag 660 millioner ekstremfattige, vil neppe omfordeling til disse gruppene kunne anses som ren «lekkasje». Innvendingen om utbetalinger til rike vil gjenstå. Men utbetaling av noen hundre overflødige dollar til en milliardær er småpenger sammenliknet med hvor mye en liten økning i skatt for disse vil bety. I de fattigste landene er imidlertid gjennomsnittlig inntektsnivå så lavt at potensialet for nasjonal omfordeling er svært begrenset.[^4] En minsteinntekt delvis finansiert med økt skatt på de med høyest inntekter må derfor være en global mer enn nasjonal omfordelingsmekanisme.[^5]
+
+[^4]: I lavinntektslandene er gjennomsnittlig BNP per innbygger per dag vel 5 USD (kjøpekraftsjustert).
+
+[^5]: I noen av de fattigste landene er vekten på indirekte skatter (som avgifter på forbruk) så stor sammenliknet med skatt på inntekt at økt skattenivå vil redusere kjøpekraften prosentvis mer for fattige enn rike. Se kapittel 5 Taxes, Transfers, and Subsidies: Improving Progressivity and Reducing the Cost to the Poor for beregninger av dette potensialet i rapporten [Poverty and Shared Prosperity 2022 (worldbank.org)](https://www.worldbank.org/en/publication/poverty-and-shared-prosperity)
+
+Mye taler for at denne måten å eliminere ekstremfattigdommen på er mer en politisk enn en praktisk eller økonomisk utfordring.
+
+## Vekst
+
+**Økonomisk vekst: Cirka 12 prosent i året til 2023.** Hva som trengs av økonomisk vekst for å avskaffe ekstremfattigdom beregnes ved å la alle inntekter og forbruk øke med samme rate. Det vil nå være [nødvendig med 9,4 prosent årlig vekst i BNP per innbygger](https://www.worldbank.org/en/publication/poverty-and-shared-prosperity) i utviklingslandene fram til 2030.[^6] Siden befolkningsveksten i mange land «spiser» opp mot 3 prosentenheter av veksten i BNP, betyr dette at BNP-veksten må være i størrelse 12 prosent per år.[^7]
+
+[^6]: I beregningene som Verdensbanken gjør regnes fattigdomsmålet som oppnådd med 3 prosent ekstremfattigdom. Begrunnelsen for dette var at den andelen ble antatt forenlig med at ingen er permanent ekstremfattige selv om det på et bestemt tidspunkt et år måles andeler på 3 prosent. Problemet med denne antakelsen er at en global andel på 3 prosent i praksis betyr høye andeler i mange land, spesielt i Afrika sør for Sahara. Dermed vil ikke målet være nådd og kravet til vekst er enda høyere.
+
+[^7]: Gjennomsnittlig befolkningsvekst i lavinntektslandene er 2,7 prosent.
+
+Vekst i slik størrelsesorden over mange år er oppnådd i noen få land, ikke minst Kina, men er helt urealistisk for de aller fleste land. Utsiktene på lenger sikt er svært usikre, men mye motvind i økonomien ventes å vedvare og forverres av stadig mer alvorlige klimakonsekvenser, ikke minst i Afrika. Mer realistiske vekstscenarier peker heller mot at [ekstremfattigdommen kan gå mot null rundt 2050](https://www.cgdev.org/sites/default/files/scenarios-future-global-growth-2050.pdf), og at det fortsatt vil være rundt 600 millioner ekstremfattige i 2030.
+
+## Urealistisk men uambisiøst?
+
+Så hva er konklusjonen: Er fattigdomsmålet for ambisiøst? Hvis en mener i betydningen urealistisk er svaret «ja» for alle de tre stiliserte måtene vi over har beskrevet at målet kan nås på. Den første av praktiske grunner, den andre av politiske, den tredje av økonomiske.
+
+Anlegger vi et globalt fordelingsperspektiv er imidlertid svaret et klart «nei». Å bli kvitt ekstremfattigdom er egentlig en ekstremt lav ambisjon; minsteprisen er lav fordi vi rett og slett får svært lite for pengene.

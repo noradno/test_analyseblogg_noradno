@@ -1,0 +1,106 @@
+---
+title: Har fattigdomsmålet en klimapris?
+format: html
+bibliography: library.bib
+author: 
+  - name: Lars Loe
+categories: 
+  - fattigdom
+  - klima
+date: 2023-10-17
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+Verden står overfor dobbel utfordring: Å bekjempe ekstrem fattigdom, som i 2022 rammet rundt 700 millioner mennesker globalt, og å takle den eskalerende klimakrisen. Hvilken innvirkning vil utryddelse av fattigdom ha på klimagassutslippene?
+
+*Lars Loe er samfunnsøkonom og fagdirektør i seksjon for statistikk og analyse.*
+
+Det var om lag 700 millioner ekstremfattige i 2022. Verden er på kurs mot 600 millioner i 2030 [@loe2023poverty] og en global temperaturøkning på rundt 2,5 grader ved århundreskiftet @iea2023netzero. Hver for seg er disse utfordringene formidable. Klimautfordringen er eksistensiell for kloden og vil ramme de fattigste hardest om klimamålene ikke nås.
+
+Det betyr ikke at oppnådd klimamål vil fjerne fattigdommen. Redusert fattigdom betyr at forbruket til de fattige må øke. Hvor mye det vil påvirke klimagassutslippene avhenger av hvor sterkt forbruksveksten blir konsentrert hos fattige land og mennesker, og hvor raskt omstillingen mot mindre utslippsintensive økonomier skjer.
+
+Nedenfor skal vi se på stiliserte beregninger basert på forenklede forutsetninger. I hovedtrekk er forutsetningen at forholdet mellom utslipp og inntektsnivå i grove trekk opprettholdes.[^1] En slik forutsetning bidrar til å klargjøre mulige konsekvenser og hva som trengs av politisk handling for å omstille verden. Resultatet av beregningene er vist i @fig-emissions.
+
+[^1]: For detaljer, se @bruckner2022impacts og @wollburg2023climate.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+#| label: fig-emissions
+#| fig-cap: "Klimakostnaden av å utrydde ekstrem fattigdom er relativt liten. Kilde: @bruckner2022impacts og @wollburg2023climate."
+
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(noradplot)
+
+ggnorad()
+
+df <- data.frame(
+  "poverty_line" = c(
+    "Grensen for ekstrem\nfattigdom (2,15 USD)",
+    "Grensen for lavere mellom-\ninntektsland (3,65 USD)",
+    "Grensen for høyere mellom-\ninntektsland (6,85 USD)",
+    "Grensen for ekstrem\nfattigdom (2,15 USD)",
+    "Grensen for lavere mellom-\ninntektsland (3,65 USD)",
+    "Grensen for høyere mellom-\ninntektsland (6,85 USD)"
+  ),
+  "method" = c(
+    "Heve forbruket til de fattige",
+    "Heve forbruket til de fattige",
+    "Heve forbruket til de fattige",
+    "Økonomisk vekst",
+    "Økonomisk vekst",
+    "Økonomisk vekst"
+  ),
+  "emissions" = c(1, 5, 18, 4.9, 15.3, 45.7)
+)
+
+df |> 
+  mutate(poverty_line = factor(poverty_line, levels = c(
+    "Grensen for ekstrem\nfattigdom (2,15 USD)",
+    "Grensen for lavere mellom-\ninntektsland (3,65 USD)",
+    "Grensen for høyere mellom-\ninntektsland (6,85 USD)"
+    ))) |> 
+  ggplot(aes(poverty_line, emissions, group = rev(method), fill = method)) +
+  geom_col(position = position_dodge2()) +
+  scale_fill_norad() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 50), 
+                     labels = scales::label_number(suffix = " %")) +
+  labs(title = "Beregnet økning i klimagassutslipp av å utrydde fattigdom",
+       subtitle = "Prosent over 2019-nivå",
+       x = NULL,
+       y = "Økning i utslipp",
+       fill = NULL) +
+  coord_flip() +
+  guides(fill = guide_legend(byrow = TRUE)) +
+  theme(legend.position = c(0.8, 0.25), plot.margin = margin(15, 15, 15, 6.6, "pt")) 
+
+```
+
+## Utslippsøkning når vekst «rasjoneres» til de fattige menneskene
+
+Den ene beregningen beskrives av de grønne søylene i figuren, og avgrenser i hovedsak utslippsøkningene til det som følger av at de fattige får økt sitt forbruk opp til hver av de tre fattigdomsgrensene. Beregningene ser med andre ord bort fra den bredere økonomiske utviklingen.
+
+Det framkommer at å utrydde ekstrem fattigdom -- å heve over fattigdomsgrensen de nå om lag 700 millioner menneskene som er under 2,15 USD om dagen -- vil gi et ekstrabidrag til klimagassutslippene på under én prosent av globale utslipp målt i forhold til 2019. Utslippsøkningen dersom vel 1,8 milliarder menneskene skal øke forbruket til over grensen på 3,65 USD for lavere mellominntektsland blir rundt fem prosent. For fattigdomsgrensen i høyere mellominntektsland (6,85 USD) blir veksten i klimagassutslipp 18 prosent.
+
+I disse beregningene er det klimaavtrykket av det økte forbruket til de fattige som regnes inn, inklusive leveransene fra tilbudssiden i økonomien som må til for å produsere dette økte forbruket. Det er med andre ord tatt hensyn til at utslippene øker gjennom økt produksjon. Utslippsintensiteten er holdt konstant og øker dermed i takt med produksjonen.
+
+## Utslippsøkning når økonomisk vekst «rasjoneres» til land med fattige mennesker
+
+De mintgrønne søylene viser utslippsøkningene knyttet til å avskaffe fattigdom gjennom bredere økonomisk vekst, men fortsatt på en avgrenset måte. Veksten «rasjoneres»: Det er kun landene med fattigdom som «får lov» til å vokse fram til fattigdommen er borte. Så skal veksten stoppe. I disse landene er det imidlertid vekst i økonomien som helhet som skal få ned fattigdommen. I land uten fattigdom «tillates» ingen vekst. Bidrag til utslippsøkning framkommer som differansen mellom vekstscenariene som utrydder fattigdommen og et scenario uten vekst i BNP per innbygger. Utslipp i forhold til BNP følger her historiske mønstre, som i hovedsak betyr at utslippene grovt sett øker i takt med den økonomiske veksten.
+
+Forskjellen på denne beregningsmåten og den overnevnte er at forbruket nå vokser i alle husholdninger, ikke bare for de som er under fattigdomsgrensen. Vi ser at utslippsøkningen knyttet til å utrydde ekstrem fattigdom femdobles til om lag fem prosent. I beregningene er ekstrem fattigdom utryddet i 2050.
+
+Utslippsøkningene forbundet med å «tillate» veksten som avskaffer fattigdom under de to høyere fattigdomsgrensene er vesentlig større: for 6,85 USD om dagen øker de globale utslippene med hele 45 prosent. Nesten 3,7 milliarder mennesker, rundt halvparten av klodens befolkning, lever under denne grensen.
+
+Ett budskap er at målkonflikten mellom å utrydde ekstrem fattigdom og å nå klimamålet synes liten. Beregningene gir små økninger i utslipp av å fjerne ekstrem fattigdom.
+
+Forutsetningene som er brukt er imidlertid ikke ment å gi et realistisk bilde av målkonflikten. Klima og fattigdom må også ses i et fordelingsperspektiv. Da forteller tallene både noe om ambisjonen i fattigdomsmålet og ansvaret for klimaproblemet. Årsaken til den lille økningen i globale utslipp som følger av å nå målet om utryddelse av ekstrem fattigdom, ligger i utgangspunktet: En person som lever i ekstrem fattigdom har ekstremt lavt forbruk, og bidrar derfor med ekstremt små utslipp. Hvis denne gruppen øker sitt konsum med noen kroner om dagen betyr det lite for globale utslipp.
+
+Et ganske annet budskap ligger i utslippsøkningene for høyere fattigdomsgrenser. Utslippsøkningene som følger av å fjerne denne fattigdommen er så store at de tydeliggjør et ufravikelig imperativ: Framtidig økonomisk vekst må frakobles utslipp. Fossil energi må erstattes av fornybar. Dette er en stor del av den store omstillings- og finansieringsutfordringen.
+
+Både fattigdom og klima handler om økonomisk vekst og fordeling, men på ulik måte. I beste fall er det rom for at økonomisk vekst fortsetter å bidra til redusert fattigdom, selv om det utvilsomt trengs jevnere fordeling av verdens «kake» mellom land og mennesker. Klimautfordringen har derimot ikke noe voksende utslippsbudsjett å fordele -- tvert imot. Dette kobler klimautfordringen og fattigdomsutfordringen tett sammen. De må løses i sammeheng -- en løsning på den ene utfordringen løser ikke automatisk den andre.

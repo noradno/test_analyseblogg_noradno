@@ -1,0 +1,25 @@
+---
+title: "Noradrapport: Er de fattigste etterlatt på stasjonen? Status og perspektiver på verdens fattigdom"
+format: html
+author: 
+  - name: Eivind Moe Hammersmark
+  - name: Lars Loe
+categories: 
+  - fattigdom
+  - makro
+  - vekst
+  - SDG 1
+  - rapport
+date: 2023-10-17
+---
+Hvor mange ekstremfattige er det i verden, og hvordan er utsiktene for å nå målet om å utrydde ekstrem fattigdom? Norad gir ut rapport om verdens fattigdom på [den internasjonale dagen for utryddelse av fattigdom.](https://www.un.org/en/observances/day-for-eradicating-poverty)
+
+*Eivind Moe Hammersmark er samfunnsøkonom (ph.d) og seniorrådgiver i seksjon for statistikk og analyse. Lars Loe er samfunnsøkonom og fagdirektør i seksjon for statistikk og analyse.*
+
+Rapporten finner du [her](https://www.norad.no/globalassets/publikasjoner/publikasjoner-2023/verdens-fattigdom.pdf). Den gir en oversikt over historikk, situasjon og utsikter for fattigdommen i lav og mellominntektsland, og konkluderer med at verden ikke vil nå bærekraftsmål nummer 1 -- å avskaffe fattigdom innen 2030.
+
+I rapporten legges størst vekt på ekstrem fattigdom, siden dette fattigdomsbegrepet står sentralt i internasjonalt samarbeid om å bekjempe den mest alvorlige fattigdommen. Å være ekstremt fattig betyr å leve for under 2,15 USD om dagen. Rapporten belyser også fattigdom under høyere pengemessige grenser, samt flerdimensjonal fattigdom, som fanger inn levekårsfaktorer utenfor privat forbruk, herunder utdanning, helse og tilgang på rent vann.
+
+Det siste året for Verdensbankens offisielle globale fattigdomstall er 2019. I rapporten bruker vi Norads egne anslag for ekstremfattigdom i verden i 2022. Les mer om datagrunnlaget og hvordan vi gjør framskrivingen i [rapporten](https://www.norad.no/globalassets/publikasjoner/publikasjoner-2023/verdens-fattigdom.pdf).
+
+![](poverty_215_map.svg){fig-alt="Kart som viser hvor stor andel av befolkningen i verdens land som er ekstremt fattige. Det er høyest andeler i Afrika sør for Sahara." width="800"}

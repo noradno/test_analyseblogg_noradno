@@ -1,0 +1,107 @@
+---
+title: FNs statistikkdag og internasjonal bistand
+format: html
+bibliography: library.bib
+author: 
+  - name: Linn Kristin Sande
+  - name: Geir Johansen
+categories: 
+  - bistand
+  - statistikk
+date: 2023-10-20
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+I forbindelse med FNs statistikkdag 20. oktober ønsker vi å rette oppmerksomheten mot det gode arbeidet som gjøres i OECD på statistikk over bistand fra medlemslandene av OECDs utviklingskomité (DAC), hvor Norge er ett av 31 medlemsland.
+
+*Linn Kristin Sande er statsviter og seniorrådgiver i seksjon for statistikk og analyse. Geir Johansen er samfunnsøkonom og fagdirektør i seksjon for statistikk og analyse.*
+
+Statistikk over norsk og internasjonal bistand er viktig fordi det gir mulighet til å se om giverlandene etterlever sine forpliktelser overfor utviklingsland og få overblikk over hva som er prioritert -- og hva som blir nedprioritert. Sentrale trender i bistanden de siste årene er at mer bistand går til humanitære kriser, og at en mindre andel går til Afrika og til de fattigste landene.
+
+På [bistandsresultater.no](https://bistandsresultater.no) deler Norad både aggregerte tall og [detaljert informasjon](https://resultater.norad.no/detaljert-data) om norsk bistand. Men for å kunne sammenligne med andre giverland, er OECD ofte en god kilde. Gjennom [Compare your country](https://www1.compareyourcountry.org/dev-coop-profiles-2023/en/0/5419/default/all/20001+8?embed=noHeaderDAC) kan man sammenligne hvordan den norske bistanden fordeler seg på utvalgte variabler, enten med utvalgte DAC-land eller med DAC totalt. OECD publiserer årlig [Development Co-operation Report](https://www.oecd.org/dac/development-cooperation-report/), som både gir overordnede trender for bistanden og mer informasjon om de enkelte giverlands innretning på bistanden.[^1]
+
+[^1]: Merk at Estland ble medlem av utviklingskomiteen 4. juli 2023, og tallene som presenteres her inkluderer derfor kun ODA fra de resterende 30 medlemslandene. Estland har imidlertid rapportert ODA til OECD i en årrekke som et ikke-DAC-land, og tall for deres bistand er derfor tilgjengelig på OECD sine sider.
+
+## Trender i bistanden og finansieringsutfordringer fremover
+
+I det følgende har vi tatt utgangspunkt i én av mange gode visualiseringer i OECD-rapporten for 2023 [@oecd2023], og gjør en sammenligning med tilsvarende størrelser for Norge.[^2]
+
+[^2]: Alle tall i dette innlegget er i faste 2021-priser. På bistandsresultater.no presenteres tallene i løpende priser. Når OECD utgir de internasjonale tallene gjøres dette imidlertid først og fremst i faste priser, for å korrigere for inflasjon og valutaendringer. Grunnet bl.a. høye petroleumsinntekter var det spesielt store forskjeller mellom faste og løpende priser for norsk bistand i 2022.
+
+```{r}
+#| label: fig-oda
+#| fig-alt: "Søylediagram som viser hvordan norsk og internasjonal bistand har endret seg mellom 2021 og 2022, fordelt på flyktningutgifter, Ukraina, covid-19 og resterende bistand."
+#| column: body-outset 
+#| fig-height: 5
+#| fig-width: 10
+#| fig-cap: "Bistand fra DAC-land og Norge fordelt på utvalgte kategorier"
+#| fig-lab: fig-oda
+#| 
+library(tidyverse)
+library(noradplot)
+library(ggrepel)
+library(ggpp)
+
+ggnorad()
+
+oda_sectors <- rev(c("Resterende ODA", "COVID-19 støtte", "Flyktningutgifter i giverland", "Ukraina"))
+
+df <- read_csv2("data.csv") |> 
+  mutate(year = factor(year),
+         oda_sector = factor(oda_sector, levels = oda_sectors)) |> 
+  group_by(country, year) |> 
+  arrange(desc(oda_sector)) 
+
+pal <- rev(as.character(norad_cols()[1:4]))
+df |> 
+  ggplot(aes(year, value, fill = oda_sector)) +
+  geom_col(width = 0.5) +
+  scale_fill_manual(values = pal) +
+  scale_y_continuous(labels = scales::label_percent(), 
+                     breaks = c(0.25, 0.5, 0.75, 1),
+                     expand = expansion(mult = c(0, 0.15))) +
+  geom_text_repel(data = filter(df, year == 2021), 
+                  aes(label = scales::percent(value, accuracy = 0.1, suffix = " %")),
+                  position = position_stacknudge(vjust = 0.5, x = 0.5), 
+                  direction = "y", hjust = 0.5) +
+  geom_text_repel(data = filter(df, year == 2022), 
+                  aes(label = scales::percent(value, accuracy = 0.1, suffix = " %")),
+                  position = position_stacknudge(vjust = 0.5, x = 0.7), 
+                  direction = "y", hjust = 0.5) +
+  labs(title = "Internasjonal og norsk fordeling av bistanden",
+       subtitle = "Andel av total bistand (ODA)",
+       x = NULL,
+       y = NULL,
+       fill = NULL) +
+  coord_cartesian(clip = "off") +
+  facet_wrap(~country)
+
+
+```
+
+Offisiell bistand (ODA) fra DAC-land økte fra 184,9 milliarder USD i 2021 til 213,3 milliarder USD i 2022 (faste 2021-priser). Dette er det høyeste nivået noensinne, og tilsvarer 0,36 prosent av DAC-landenes brutto nasjonalinntekt (BNI). Også den norske bistanden økte i faste 2021-priser, fra 4,7 milliarder USD i 2021 til 4,8 milliarder USD i 2022. Sammenligner vi den norske bistanden med DAC totalt er mange av trendene mellom 2021 og 2022 de samme:
+
+-   Bistanden fra DAC-land til covid-19 bekjempelse ble redusert fra 21,9 milliarder USD (12 prosent av total bistand) til 12,0 milliarder USD (6 prosent). Også den norske støtten ble redusert, fra 273,9 millioner USD (6 prosent) til 42,8 millioner USD (1 prosent).
+
+-   Samtidig økte bistanden fra DAC-land til flyktningutgifter i giverland fra 12,8 milliarder USD (7 prosent) til 30,1 milliarder USD (14 prosent). Bistanden til flyktningutgifter i Norge økte også, fra 52,3 millioner USD (1 prosent) til 449,7 millioner USD (9 prosent).
+
+-   Bistanden fra DAC-land til Ukraina økte fra 918 millioner USD (0,5 prosent) til 15,5 milliarder USD (7 prosent). Norsk bistand til Ukraina økte fra 18,5 millioner USD (0,4 prosent) til 539,9 millioner USD (11 prosent).
+
+-   Bistand fra DAC-land som ikke rettet seg mot covid-19 bekjempelse, flyktningutgifter i giverland eller Ukraina så en liten økning, fra 149,2 milliarder USD til 155,6 milliarder USD. Som andel av den totale bistanden var det imidlertid en nedgang, hvor denne støtten utgjorde 81 prosent i 2021 og 73 prosent i 2022.
+
+-   Også Norge så en nedgang i andel av den totale bistanden som gikk til resterende ODA, fra 93 prosent til 78 prosent.
+
+Samtidig som mange av trendene er de samme for Norge og DAC totalt, var det også klare forskjeller mellom bistanden fra DAC-land og den norske bistanden.
+
+-   Den norske bistanden ble i noe mindre grad påvirket av store kriser, hvor tallene for både 2021 og 2022 viser at Norge opprettholdt resterende ODA i større grad enn DAC totalt. Norge økte bistandsbudsjettet for 2022 betraktelig i løpet av året for å håndtere effektene av Russlands angrepskrig på Ukraina, noe som er med på å forklare dette.
+
+-   Norge brukte en relativ mindre andel av bistanden på innenlandske flyktningutgifter enn DAC-totalt, med 9 prosent i 2022 opp mot DAC sine 14 prosent. Her er det store variasjoner mellom land, hvor blant annet Australia og Japan brukte 0 prosent av ODA i 2022, mens Tsjekkia og Polen brukte 65 prosent av ODA.
+
+-   En større andel av norsk bistand gikk til Ukraina i 2022 enn for DAC totalt, med 11 prosent av ODA opp mot DAC sine 7 prosent. Her er det imidlertid viktig å ha med seg at tallene kun viser bistanden fra medlemsland. Mange europeiske land støttet Ukraina gjennom EU-institusjonene heller enn over sine nasjonale bistandsbudsjetter -- og dette er støtte som ikke kommer frem i denne figuren.
+
+Dette er kun én av visualiseringene som trekkes frem i OECD-rapporten. Et annet sentralt punkt å trekke frem er at bistand til Ukraina er den nest høyeste som noensinne er gitt til et land, etter Irak i 2005. DAC-landene ga 16,1 milliarder USD i støtte til Ukraina, og EU-institusjoner delte ut ytterligere 10,6 milliarder USD. I rapporten uttrykker også OECD bekymring knyttet til de trendene vi nå kan lese ut av statistikken; Vil DAC-medlemmene i årene fremover fortsette å bruke høye andeler av ODA på flyktningekostnader, og dermed ha mindre til å nå bærekraftsmålene i utviklingsland? Gjenoppbyggingen av Ukraina vil kreve over 400 milliarder USD over 10 år, nesten dobbelt så mye som de globale ODA-utgiftene til DAC-landene i 2022. Klarer vi å sikre tilstrekkelig finansiering fra andre kilder enn ODA, herunder private investeringer?
+
+Les mer om dette og mye mer i [Development Co-operation Report for 2023](https://www.oecd.org/dac/development-cooperation-report/)!

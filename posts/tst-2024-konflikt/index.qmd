@@ -1,0 +1,373 @@
+---
+title: "Land med konflikt mottar stadig mer av den norske bistanden"
+format: html
+bibliography: library.bib
+author: 
+  - name: Katrine Heggedal
+  - name: Einar Tornes
+  - name: Carola Casti
+categories: 
+  - bistand
+  - konflikt
+date: 2024-05-07
+# language:
+#   nb:
+#     crossref-nte-title: "Boks"
+#     crossref-nte-prefix: "Boks"
+lightbox: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+For å undersøke hvordan norsk bistand preges av konfliktsituasjonen i verden, kobler vi nylig lansert norsk bistandsstatistikk fra Norad med konfliktdata fra UCDP, og finner at andelen av landspesifisert bistand til konfliktland er mer enn doblet i løpet av de siste 15 årene. I 2023 gikk så mye som 67 prosent av norsk landspesifisert bistand til land med konflikt.
+
+*Katrine Heggedal er statsviter og leder for Norads seksjon for statistikk og analyse. Einar Tornes er statsviter og seniorrådgiver i seksjon for statistikk og analyse. Carola Casti er samfunnsøkonom (ph.d.) og seniorrådgiver i seksjon for statistikk og analyse.*
+
+```{r, echo=FALSE}
+
+library(noradplot)
+library(ggplot2)
+library(scales)
+library(patchwork)
+library(dplyr)
+library(stringr)
+ggnorad()
+
+```
+
+Det er mer konflikt i verden enn det har vært på flere årtier. To milliarder mennesker lever i land som er påvirket av konflikt og i 2022 døde flere mennesker i krig enn i noe år siden 1984 [@obermeier2023conflict]. Konfliktdata fra [UCDP](https://ucdp.uu.se/) viser at nesten alle konflikter utspiller seg i utviklingsland, de fleste av dem i Afrika, og at de mest langvarige konfliktene er i de fattigste landene. For å undersøke hvordan dette preger utviklingssamarbeidet har vi koblet norsk og internasjonal bistandsstatistikk med konfliktdata fra UCDP.
+
+::: {#nte-metode .callout-note collapse="true" icon="true"}
+### Om statistikken og metodene
+
+Norsk offisiell bistandsstatistikk for 2023 ble lansert av Norad 7. mai. For å undersøke hvordan norsk bistand preges av konfliktsituasjonen i verden, har vi koblet [den norske bistandsstatistikken](https://resultater.norad.no/) som Norad produserer og [OECD DACs ODA-statistikk](https://data-explorer.oecd.org/?fs%5b0%5d=Topic%2C0%7CDevelopment%23DEV%23&pg=0&fc=Topic&bp=true&snb=32) med konfliktdata fra [UCDP](https://ucdp.uu.se/).
+
+Fra UCDP bruker vi datasettene UCDP Georeferenced Event Dataset (GED) Global version 23.1 og UCDP Candidate Events Dataset (UCDP Candidate) version 23.01.23.12. Førstnevnte inkluderer konflikthendelser frem til og med 2022 og sistnevnte inneholder foreløpige data for 2023.
+
+Vi definerer konfliktland ved å sette en terskel på 150 konfliktrelaterte dødsfall i minst én konflikt for at et land regnes som et konfliktland det aktuelle året. Terskelen er dels basert [metodikk fra Verdensbanken](https://thedocs.worldbank.org/en/doc/fb0f93e8e3375803bce211ab1218ef2a-0090082023/original/Classification-of-Fragility-and-Conflict-Situations-FY24.pdf).
+
+Et forbehold knyttet til dataene er at vi ikke disaggregerer lengre ned enn til landnivå, fordi bistandsstatistikken ikke er detaljert nok til å kunne se på bistandsprosjekter og konflikt på subnasjonalt nivå. I analysene tar vi altså ikke hensyn til om bistandsprosjektene og konflikthendelsene er i samme del av landet eller ikke.
+
+En annen begrensning er at vi tar for oss kun den landspesifiserte bistanden, og ikke analyserer helheten av norsk bistand som til slutt ender i et land. Det som utelates er bistand gjennom globale og regionale programmer/fond og kjernebidrag til multilaterale institusjoner.
+
+Dette er kjente begrensninger også fra andre tema innenfor bistanden. Landspesifisert bistand er vanlig praksis å bruke for analyseformål av bistand til land, og tallene og analysene er nyttige for å belyse overordnede trender og gi forståelse om bistand til land med konflikt.
+
+Detaljert internasjonal ODA-statistikk (OECDs CRS database) for 2023 er ikke tilgjengelig. I analyse av trender for internasjonal bistand stopper vi derfor i 2022.
+:::
+
+Vi finner i @fig-figure1 at norsk og internasjonal bistand til land med konflikt har økt betydelig de siste 10–15 årene. Prosentandelen av norsk landspesifisert bistand til konfliktland har økt fra under én tredel i 2010 til to tredeler i 2023. La oss dykke litt dypere inn i denne utviklingen for norsk bistand.
+
+```{r}
+#| label: fig-figure1
+#| #column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Land med konflikt mottar stadig mer av norsk og internasjonal bistand. Note: Konfliktland definert i et gitt år som land med minst én konflikt som kan knyttes til minst 150 dødsfall i det aktuelle året. Afghanistan og Sør-Sudan var i 2023 under konfliktterskelen, men er likevel kategorisert konflikt fordi 2023-data er foreløpige og landene t.o.m. 2022 var over konfliktterskelen. 2023-data er utelatt fra figuren fordi internasjonale tall for 2023 ikke er tilgjengelige. Kilde: OECD, UCDP."
+#| fig-alt: "Linjediagram som viser en økning i andelen av norsk og internasjonal bistand til land med konflikt, definert som land med konflikt knyttet til minst 150 dødsfall i året."
+#| fig-align: center
+
+# Plot 1 ------------------------------------------------------------------
+
+load("blog_data/conflict_nor_dac.RData")
+
+minyear <- min(df_conflict_nor_dac$year)
+maxyear <- max(df_conflict_nor_dac$year)
+
+df_conflict_nor_dac |> 
+  mutate(donor = str_replace(donor, "OECD/DAC-land", "OECD DAC")) |>
+  ggplot(aes(x = year, y = pct, color = donor)) +
+  geom_line(linewidth = 1.5) +
+  geom_text(aes(label = label_maxyear), hjust = -0.2, size = 5, show.legend = FALSE, color = "black") +
+  scale_x_continuous(breaks = seq(minyear, maxyear, by = 3), expand = expansion(c(0.05, 0.12))) +
+  scale_y_continuous(limits = c(0, 1), labels = percent, expand = expansion(c(0, 0))) +
+  labs(
+    title = "Norsk og internasjonal bistand til land med konflikt",
+    subtitle = "Prosent av landspesifisert bistand",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    #caption = "Land med over 150 konfliktrelaterte d\u00F8dsfall i l\u00F8pet av \u00E5ret (Verdensbank-metodologi).\nUCDP"
+  ) +
+  scale_color_manual(values = c("OECD DAC" = "#03542d", "Norge" = "#ff8ad2")) +
+  guides(color = guide_legend(reverse = FALSE)) +
+  theme(legend.position = "right", plot.margin = margin(15, 15, 15, 15))
+
+```
+
+## Økt andel bistand til konfliktland i nyere og langvarige samarbeidsland
+
+At mer av bistanden går til land med konflikt skyldes både en prioritert dreining av bistand mot konfliktland og at flere av våre langvarige samarbeidsland er rammet av konflikt enn før. @fig-figure2 viser økningen i landspesifisert bistand til konfliktland fra 2010 og fremover, fordelt på ulike kategorier av samarbeidsland: langvarige samarbeidsland med eksisterende konflikt i 2010 (mørkegrønn), langvarige samarbeidsland med nye konflikter etter 2010 (lysegrønn) og nyere samarbeidsland med konflikter (rosa).[^1]
+
+[^1]: «Langvarige samarbeidsland» er definert som land som har mottatt minst 100 millioner kroner i landspesifisert bistand fra Norge totalt frem t.o.m. 2010. «Langvarige samarbeidsland med eksisterende konflikt» hadde konflikt ved periodestart i 2010. «Langvarige samarbeidsland med nye konflikter» er land uten eksisterende konflikt i 2010, men har blitt konfliktland i etterkant. «Nyere samarbeidsland med konflikt» er land som totalt har mottatt ingen eller mindre enn 100 millioner i landspesifisert bistand fra Norge frem t.o.m. 2010.
+
+Vi ser en økning til langvarige samarbeidsland med konflikt frem til 2022. Økningen er til langvarige samarbeidsland med nye konflikter etter 2010, som Etiopia, Mosambik og Niger. Andelen til langvarige samarbeidsland som hadde eksisterende konflikt i 2010 har holdt seg relativt stabil på rundt 20–25 prosent frem til 2022, og er land som Afghanistan, Sudan/Sør-Sudan og Somalia.
+
+Den betydelige økningen til nyere samarbeidsland med konflikt er i hovedsak til Ukraina, Syria og Jemen. Omfanget av bistand til Ukraina fra 2022 har ført til nedgang i prosentandelen til langvarige samarbeidsland med konflikt, men i beløp har bistanden til de langvarige samarbeidslandene med konflikt økt fra 2021.
+
+```{r}
+#| label: fig-figure2
+#| #column: body
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: "Statistikken viser at den økte andelen bistand til konfliktland drives både av langvarige samarbeidsland med nye konflikter (etter 2010) og av nyere samarbeidsland med eksisterende konflikt (før 2010). Note: «Langvarige samarbeidsland» er definert som land som har mottatt minst 100 millioner kroner i landspesifisert bistand fra Norge totalt frem t.o.m. 2010. «Langvarige samarbeidsland med eksisterende konflikt» hadde konflikt ved periodestart i 2010. «Langvarige samarbeidsland med nye konflikter» er land uten eksisterende konflikt i 2010, men har blitt konfliktland i etterkant. «Nyere samarbeidsland med konflikt» er land som totalt har mottatt ingen eller mindre enn 100 millioner i landspesifisert bistand fra Norge frem t.o.m. 2010. Kilde: Norad, UCDP."
+#| fig-alt: "Arealdiagram som viser fordelingen av norsk bistand til konfliktland, kategorisert i landgrupper definert etter konfliktstatus i 2010 og senere."
+#| fig-align: center
+
+# Plot 2 ------------------------------------------------------------------
+
+load("blog_data/recipient_groups_pct.RData")
+
+minyear <- min(df_recipient_groups_pct$year)
+maxyear <- max(df_recipient_groups_pct$year)
+
+df_recipient_groups_pct |> 
+  ggplot(aes(year, pst, fill = recipient_group)) +
+  geom_area() +
+  scale_y_continuous(labels = percent, limits = c(0, 1), expand = expansion(c(0, 0))) +
+  scale_x_continuous(breaks = seq(minyear, maxyear, by = 2), expand = expansion(c(0, 0.05))) +
+  scale_fill_manual(values = c("#ff8ad2", "#b4eac9", "#03542d")) +
+  labs(
+    title = "Bistand til konfliktland, etter partner- og konfliktstatus i 2010",
+    subtitle = "Prosent av norsk øremerket bistand",
+    x = NULL, y = NULL,
+    fill = NULL
+  ) +
+  guides(fill = guide_legend(reverse = FALSE)) +
+  theme(legend.position = "bottom", legend.direction = "vertical", plot.margin = margin(15, 15, 15, 15))
+
+```
+
+Skyldes økningen til langvarige samarbeidsland med nye konflikter (lysegrønn kategori) i hovedsak at disse landene har blitt omkategorisert til konfliktland mens bistanden har holdt seg stabil, eller også at bistanden til landene har økt i perioden? Samlet sett er økningen i stor grad drevet av omkatorisering, men det er regionale forskjeller. En betydelig del av økningen i Afrika og Midtøsten er drevet av økt bistand til landene og ikke kun omkategorisering.
+
+## Mer av den norske nødhjelpen rettes mot land med konflikt
+
+I 2010 var nødhjelp omtrent likt fordelt mellom land med og uten konflikt, og utgjorde syv–åtte prosent av landspesifisert bistand. I 2023 har nødhjelp til konfliktland økt betydelig til 24 prosent av landspesifisert bistand. Til sammenligning er nødhjelp til land uten konflikt uendret på syv prosent. Økningen i nødhjelp går dermed til land med konflikt, selv om nødhjelpen til landene i tillegg kan være drevet av andre typer humanitære kriser.
+
+Vi kan legge til at den totale norske nødhjelpen økte i 2023 til 12,4 milliarder kroner, mer enn tre ganger nivået i 2014, målt i løpende priser. Total nødhjelp er mer enn den landspesifiserte bistanden, som også inkluderer regionalt spesifisert bistand, tematiske fond og kjernestøtte til multilaterale organisasjoner.
+
+Vi ser i @fig-figure3 at også en økende andel av langsiktig utviklingsbistand går til land med konflikt, og forholdet mellom nødhjelp og langsiktig bistand har holdt seg relativt stabil. Det tyder på at Norge opprettholder det langsiktige utviklingssamarbeidet også gjennom perioder med konflikt. I tillegg er 70 prosent av bistanden til Ukraina er registrert i bistandsstatistikken som langsiktig bistand. Landet mottok i 2023 én tredel av den totale landspesifiserte bistanden.
+
+```{r}
+#| label: fig-figure3
+#| #column: body
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: "Norge opprettholder det langsiktige utviklingssamarbeidet også gjennom perioder med konflikt. Kilde: Norad, UCDP."
+#| fig-alt: "Arealdiagrom som viser bistand til land med konflikt, fordelt på nødhelp og langsiktig bistand. Nødhjelpen har økt til 24 prosent av landspesifisert bistand i 2023. Forholdet mellom nødhjelp og langsiktig bistand til land i konfilkt har holdt seg relativt stabilt."
+#| fig-align: center
+
+load("blog_data/hum_Dev_pct.RData")
+
+minyear <- min(df_hum_long$year)
+maxyear <- max(df_hum_long$year)
+
+df_hum_long |> 
+  ggplot(aes(year, pst, fill = aid_type)) +
+  geom_area() +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1), expand = expansion(c(0, 0))) +
+  scale_x_continuous(breaks = seq(minyear, maxyear, by = 2), expand = expansion(c(0, 0.05))) +
+  scale_fill_manual(values = c("#ff570d", "#9acce8")) +
+  labs(
+    title = "Bistand til land med konflikt, fordelt på nødhjelp og langsiktig bistand",
+    subtitle = "Prosent av landspesifisert bistand",
+    x = NULL, y = NULL,
+    fill = NULL
+  ) +
+  theme(legend.position = "bottom", plot.margin = margin(15, 15, 15, 15)) +
+  guides(fill = guide_legend(reverse = TRUE))
+
+```
+
+## De seks største mottakerlandene av norsk landspesifisert bistand er konfliktrammet
+
+At mer av norsk bistand er til land med konflikt fremgår tydelig når vi i @fig-figure4 ser på hvilke land som var de største mottakerlandene sammenlignet med for ti år siden. De seks største mottakerlandene i 2023 – Ukraina, Palestina, Syria, Afghanistan, Etiopia og Sør-Sudan – er land med konflikt. Bistanden til Moldova er imidlertid en konsekvens av krigen i Ukraina. Med andre ord var det kun Indonesia blant topp ti mottakerland som ikke var preget av konflikt i 2023.
+
+```{r}
+#| label: fig-figure4
+#| fig-column: body-outset
+#| fig-width: 12
+#| fig-height: 5
+#| fig-cap: "Åtte av de ti største mottakerlandene for norsk bistand i 2023 var rammet av konflikt, mot fire av ti i 2024. Kilde: Norad, UCDP."
+#| fig-alt: "Søylediagram som viser de ti største mottakerlandene for norsk bistand i 2023. Åtte av landene var rammet av konflikt."
+#| fig-align: center
+
+load("blog_data/topten.RData")
+
+p_topten2014 <- df_topten2014 |> 
+  ggplot(aes(x= recipient_country_no, y = nok_mill, fill = violence_150_character)) +
+  geom_col() + 
+  coord_flip() +
+  scale_fill_norad() +
+  scale_y_continuous(expand = expansion(c(0, 0.1)), limits = c(0, 9000)) +
+  labs(title = "2014", x = NULL, y = NULL, fill = NULL) +
+  theme(legend.position = "bottom", axis.ticks.y = element_blank())
+
+p_topten2023 <- df_topten2023_adjusted |> 
+  ggplot(aes(x= recipient_country_no, y = nok_mill, fill = violence_150_character)) +
+  geom_col() + 
+  coord_flip() +
+  scale_fill_norad() +
+  scale_y_continuous(expand = expansion(c(0, 0.1)), limits = c(0, 9000)) +
+  labs(title = "2023", x = NULL, y = NULL, fill = NULL) +
+  theme(legend.position = "bottom", axis.ticks.y = element_blank())
+
+p_topten_combine <- p_topten2014 + p_topten2023 +
+  plot_layout(guides = "collect") +
+  plot_annotation(title = "Ti største samarbeidsland i norsk bistand", subtitle = "Millioner kroner") &
+  theme(legend.position = "bottom", plot.caption = element_text(size = 10))
+
+p_topten_combine
+
+```
+
+## Over tid har mest av norsk bistand til konfliktland gått til Afrika, men mest til Europa to siste år
+
+Figur @fig-figure5 viser norsk bistand til konfliktland i regionene som driver økningen til konfliktland. Konfliktland i Afrika utgjør den klart største gruppen av konfliktland, og utgjør en betydelig del av landspesifisert bistand i enkelte år – opp mot 30 prosent i 2020 og 2021. Det har vært en klar økning i andel bistand til konfliktland på det afrikanske kontinentet siden 2010. Økningen skyldes både at flere land har blitt rammet av konflikt, men også økt bistand til landene. Den økte andelen bistanden til konfliktland er også til land i Midtøsten. Denne bistanden har i all hovedsak vært til Syria og omkringliggende land, Jemen og Palestina.
+
+Angrepskrigen mot Ukraina og omprioriteringer i norsk utviklingspolitikk har endret bildet. Europa er nå regionen som mottar den største andelen av bistand til konfliktland. Ukraina mottar mer landspesifisert bistand enn alle land med konflikt i Afrika til sammen. Nedgangen i andelen til konfliktland i Afrika og Midtøsten fra 2021 utgjør ikke en reduksjon i beløp, men andelene reduseres på grunn av den betydelige økningen til Ukraina.
+
+```{r}
+#| label: fig-figure5
+#| #column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Konfliktland i Afrika utgjør den klart største gruppen av konfliktland, men omprioriteringer som følge av krigen mot Ukraina har endret bildet. Kilde: Norad, UCDP."
+#| fig-alt: "Linjediagram som viser norsk bistand til konfliktland fordelt på utvalgte regioner. Afrika er den regionen som har mottatt mest bistand til konfliktland, men de to siste årene har Europa overtatt som største region."
+#| fig-align: center
+
+load("blog_data/region_pct_time.RData")
+
+minyear <- min(df_region_pct_time$year)
+maxyear <- max(df_region_pct_time$year)
+
+df_region_pct_time |> 
+  mutate(main_region_no = factor(main_region_no, levels = c("Europa", "Afrika", "Midtøsten"))) |> 
+  ggplot(aes(year, pct, color = main_region_no)) +
+  geom_line(linewidth = 1.5) +
+  scale_x_continuous(breaks = seq(minyear, maxyear, by = 2), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, NA), labels = percent, expand = c(0, NA)) +
+  scale_color_manual(values = c("#ff8ad2", "#03542d", "#e1e11f")) +
+  labs(
+    title = "Bistand til konfliktland i utvalgte regioner",
+    subtitle = "Prosent av total landspesifisert bistand",
+    x = NULL, y = NULL,
+    color = NULL
+  ) 
+
+```
+
+## Mindre andel bistand til konfliktløsning og -forebygging
+
+Vi har sett at over tid har en økende andel av norsk landspesifisert bistand gått til konfliktrammede land. Det skyldes både en dreining i bistanden mot konfliktland og at flere av land vi jobber i rammes av konflikter. Dette har også påvirket den tematiske innrettingen bistanden. @fig-figure6 viser total norsk øremerket bistand (bilateral ODA i OECD-terminologi), som i tillegg til den landspesifiserte bistanden inkluderer bistand som ikke er avgrenset til enkeltland, men er regionspesifisert eller geografisk uspesifisert.[^2] Andelen til nødhjelp er vist med den røde linjen, mens bistand til konfliktløsning og -forebygging er vist i gult.
+
+[^2]: Øremerket bistand er med andre ord total bistand med unntak av kjernestøtte til multilaterale institusjoner og administrasjonskostnader.
+
+For å måle øremerket bistand til konfliktløsning og -forebygging bruker vi DAC-sektor 152,[^3] som tilsvarer kategorien «ODA for core peace building» i OECD-rapporten «Peace and Official Development Assistance» [@oecd2023peace]. Kategorien representerer den snevreste definisjonen av slikt arbeid i denne rapporten, og utelater blant annet bistand for stabilisering og forebygging i bredere forstand.
+
+[^3]: DAC-sektor 152 dekker aktiviteter hvor støtte til vedvarende fred er et hovedmål, og inkluderer blant annet sivilt fred- og forsoningsarbeid, sikkerhetssystemer, minerydding og ODA-godkjent deltakelse i internasjonale fredsbevarende operasjoner.
+
+```{r}
+#| label: fig-figure6
+#| #column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Humanitær bistand som andel av øremerket (også kalt bilateral) bistand har nesten doblet seg de siste 15 årene, mens andelen til konfliktløsning og -forebygging har gått ned. Kilde: Norad, UCDP."
+#| fig-alt: ""
+#| fig-align: center
+#| 
+load("blog_data/type.RData")
+
+minyear <- min(df_type$year)
+maxyear <- max(df_type$year)
+
+df_type |> 
+  ggplot(aes(year, nok_percent, color = aid_type)) +
+  geom_line(linewidth = 1.5) +
+  scale_y_continuous(labels = percent, limits = c(0,1), expand = expansion(c(0, 0))) +
+  scale_x_continuous(breaks = seq(minyear, maxyear, by = 2), expand = expansion(c(0.05, 0.05))) +
+  scale_color_manual(values = c("#03542d", "#ff570d", "#e1e11f")) +
+  labs(
+    title = "Konfliktløsning og -forebygging, nødhjelp og annen bistand",
+    subtitle = "Prosent av norsk øremerket bistand",
+    x = NULL, y = NULL,
+    color = NULL
+  )
+
+```
+
+Andelen humanitær bistand har nesten doblet seg de siste 15 årene – fra 12 prosent i 2010 til 22 prosent i 2023. I samme periode har andelen bistand til å forebygge og løse konflikter holdt seg relativt uendret rundt fem prosent. Andelen er noe redusert de siste årene til under fire prosent i 2023, selv om nivået er relativt stabilt i beløp. Prosentandelen til konfliktløsning og -forebygging er på nivå med våre skandinaviske naboland, og noe høyere enn bistandsgivere i OECD samlet sett, hvor andelen er om lag to prosent. Også i internasjonal bistand er det en nedgang i andelen til konfliktløsning og -forebygging (@fig-figure7), samtidig som andelen til nødhjelp øker. Reduksjonen gjelder også til land i sårbare og konfliktrammede kontekster, hvor det også er en nedgang i beløp.
+
+Trenden kan synes påfallende, gitt at forskning og internasjonale anbefalinger, i tillegg til norske strategier[^4] og [veiledere](https://www.regjeringen.no/no/dokumenter/veileder-for-helhetlig-innsats-for-ansatte-i-utenrikstjenesten/id3028620/) om innsatser i sårbare kontekster, peker på viktigheten av å jobbe helhetlig i sårbare kontekster. Ikke minst fordi, som Verdensbanken og FN peker på i sin felles rapport «Pathways to peace» [@unwb2018pathways], det er langt mindre kostbart for det internasjonale samfunnet å investere i fred, enn å betale for de nødhjelps- og fredsintervensjoner som må til for å møte konsekvensene av krig og finne vei tilbake til fred. Naturligvis får ikke bistandsstatistikken frem det fulle bildet av internasjonal fredsinnsats – her spiller også andre politiske verktøy og finansiering utenfor bistanden en rolle. Samtidig vet vi at fattigdomsutfordringen i verden i stadig større grad vil være konsentrert i land med langvarig konflikt. Trendene vi har pekt på i dette innlegget, med kraftig dreining av bistanden mot konfliktland, vil derfor antagelig fortsette. Det kan skape utfordringer for både implementering og effektivitet av norsk bistand. En helhetlig tilnærming i bistanden, hvor investeringer i konfliktløsning og -forebygging fortsetter å spille en rolle, er én del av løsningen.
+
+[^4]: [Strategi for norsk innsats i Sahelregionen (2021–2025)](https://www.regjeringen.no/no/dokumenter/sahel_strategi_2021_2025/id2863044/) og [Strategisk rammeverk for norsk innsats i sårbare stater og regioner](https://www.regjeringen.no/no/dokumenter/saarbare_stater/id2563780/).
+
+```{r}
+#| label: fig-figure7
+#| column: body-outset
+#| fig-width: 10
+#| fig-height: 4
+#| fig-cap: "Nedgang i andelen av øremerket internasjonal bistand som går til konfliktløsning og -forebygging. Norge var i 2022 den fjerde største giveren til denne typen bistand internasjonalt. Kilde: OECD."
+#| fig-alt: "Linjediagram som viser en nedgang i andelen av internasjonal bistand som går til konfliktløsning og -forebygging de siste fem årene."
+
+load("blog_data/peace_dac_time.RData")
+load("blog_data/peace_topfive.RData")
+
+minyear <- min(df_peace_dac_time$year)
+maxyear <- max(df_peace_dac_time$year)
+
+p_peace_dac_time <- df_peace_dac_time |> 
+  ggplot(aes(x = year, y = peace_share)) +
+  geom_line(linewidth = 1.5, color = "#03542d") +
+  #geom_text(aes(label = label_maxyear), na.rm = T, hjust = -0.5, size = 5.5, show.legend = F, color = "black") +
+  scale_x_continuous(breaks = seq(minyear, maxyear, by = 3), expand = expansion(c(0.05, 0.1))) +
+  scale_y_continuous(
+    limits = c(0, 0.1),
+    labels = label_percent(accuracy = 1),
+    expand = expansion(c(0, 0))
+  ) +
+  labs(
+    #title = "Fredsbistand (152) fra OECD/DAC-medlemmer",
+    subtitle = "Andel av internasjonal bilateral bistand",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+  ) +
+  scale_color_manual("#03542d")
+
+p_peace_topfive <- df_peace_topfive |> 
+  # Oversett landene til norsk
+  mutate(donor_name = recode(
+    donor_name,
+    "United States" = "USA",
+    "Germany" = "Tyskland",
+    "United Kingdom" = "Storbritannia",
+    "Norway" = "Norge",
+    "Sweden" = "Sverige"
+  )) |> 
+  ggplot(aes(x = donor_name, y = total_disbursed, fill = donor_name)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  # geom_text(aes(label = scales::number(total_disbursed, accuracy = 1)), hjust = 0, nudge_y = 50) +
+  geom_text(aes(label = donor_name), y = 200, hjust = 0, family = "Norad Display", size = 5, 
+            color = c("#b4eac9", "#b4eac9", "#b4eac9", "black", "#b4eac9")) +
+  scale_y_continuous(expand = expansion(c(0, NA))) +
+  coord_flip() +
+  labs(
+    subtitle = "Fem største givere til konfliktløsning og -forebygging",
+    x = NULL, y = NULL
+  ) +
+  scale_fill_manual(values = c("#03542d", "#e1e11f", "#03542d", "#03542d", "#03542d", "#03542d")) +
+  theme(
+      axis.ticks = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.line = element_blank()
+  )
+
+# Combine
+p_peace_dac_time + p_peace_topfive + plot_annotation(title = "Internasjonal bistand til konfliktløsning og -forebygging", 
+                                                     theme = theme(plot.title = element_text(margin = margin(0, 0, 0, 0)),
+                                                                   plot.margin = margin(15, 15, 15, 15)))
+                                                                    
+```

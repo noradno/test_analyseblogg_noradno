@@ -1,0 +1,275 @@
+---
+title: "When conflict prevails: Chronic crises in focus"
+format: html
+bibliography: library.bib
+author: 
+  - name: Carola Casti
+date: 2024-06-13
+categories:
+  - konflikt
+  - bistand
+lightbox: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+In a world where conflicts are becoming more protracted and complex, development assistance has never been more crucial. As we see a record number of conflicts globally, the impact on countries' socio-economic conditions is profound, often trapping them in a vicious cycle of poverty and violence. This post delves into the dynamics of long-term crises, highlighting some of the challenges of delivering effective assistance in such volatile environments.
+
+*Carola Casti is an economist (PhD) and Senior Adviser in the Section for Statistics and Analysis.*
+
+```{r}
+# Load necessary packages
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readxl)
+library(noradplot)
+
+ggnorad()
+
+```
+
+Conflicts and wars are on an upward spiral. They are often referred to as protracted or chronic conflicts, which tend to trap countries in a conflict-poverty spiral. In this complex and unstable landscape, development aid becomes one of the most crucial tools to deliver both short and long-term assistance. Chronic crises represent, indeed, a huge driver of humanitarian needs (which have peaked in 2023) and are “typically synonymous with conflict-affected, fragile and refugee-hosting countries” according to a report by Stockholm International Peace Research Institute [@milante2022chronic]. This raises some important questions on how donors prioritize the countries to engage with, and whether their choices may come at the expenses of neglecting other complex and long-term crises, equally pressing but not so extensively covered in media and public discourse. In this blog we offer an overview of what protracted conflicts are and the implications from a development perspective.
+
+## The world has become less peaceful over the last years
+
+2022 will be remembered as a record year, marking the highest number of conflicts since the Second World War [@obermeier2023conflict]. @fig-figure1 illustrates the trends in the number of conflicts over the last two decades across different regions in the world.[^1] Africa unfortunately leads in this regard; however, in recent years, all regions of the world have experienced an upward trend in the number of conflicts. This should raise some concern, as this trend seems to be more of a global one rather than just a regional one. The consequences of conflicts, though, vary substantially across countries, closely linked to their level of economic development.
+
+[^1]: This criterion follows the [methodology outlined by the World Bank](https://thedocs.worldbank.org/en/doc/fb0f93e8e3375803bce211ab1218ef2a-0090082023/original/Classification-of-Fragility-and-Conflict-Situations-FY24.pdf).
+
+```{r}
+#| label: fig-figure1
+#| column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "The number of conflicts has increased globally, with Africa at the forefront. Source: Norad's elaborations based on UCDP."
+#| fig-alt: ""
+
+df <- read_xlsx("figures.xlsm", sheet = "fig.1", skip = 2) |> 
+  rename("year" = `Row Labels`) |> 
+  pivot_longer(-year) |> 
+  rename("continent" = name, "n_conflicts" = value)
+
+df |> 
+  ggplot(aes(year, n_conflicts, color = continent, group = continent)) +
+  geom_line() +
+  labs(x = NULL,
+       y = "Number of conflicts",
+       title = "Number of conflicts, 2001–2023",
+       subtitle = "By continent",
+       color = NULL) +
+  scale_color_norad() +
+  scale_x_continuous(breaks = seq(2003, 2023, 5), expand = expansion(mult = c(0, 0.05)))
+```
+
+## Peace: An uncharted territory for many countries
+
+Not all countries are equally able to bear the disruptive cost of conflicts and wars, and, at the same time, not all conflicts produce the same effects. They can vary according to some dimensions, such as their:
+
+-   Intensity (minor vs. major conflicts like wars)
+-   Type (state, non-state, one-sided violence)
+-   Duration (in the span of three decades conflicts have become, on average, longer, nearly doubling from 16 in 1990 to 30 in 2020 [@iiss2021armed])
+
+This has certainly massive consequences from a socio-economic development standpoint. @fig-figure2 illustrates the list of countries in conflict over the period 2012–2023 (including both old and new ones). The dark green cell identifies the conflict years. Many countries (in orange font in @fig-figure2) have been in conflict at least 75 percent of the time (corresponding to ca. 9 conflict years out of 12). They may vary, of course, based on their intensity (minor conflicts versus wars) and, consequently, fatalities. @fig-figure2 only looks at the last decade.[^2]
+
+[^2]: Following this method, new conflicts are also treated as short-term conflicts.
+
+```{r}
+#| label: fig-figure2
+#| column: body
+#| fig-width: 7
+#| fig-height: 8
+#| fig-cap: "Some conflicts are protracted. Source: Norad's elaborations based on data from UCDP"
+#| fig-alt: ""
+
+#figure 2: heatmap chronic vs non chronic crised 2012-2023
+
+df <- read_excel("figures.xlsm", sheet = "fig.2")
+
+#import sheet named 'fig2'
+#pivot the data frame into a long format
+chronic <- df %>%
+  pivot_longer(
+    cols = c('2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'),
+    names_to = 'year',
+    values_to = 'fatalities'
+  )
+
+
+# Create heatmap with countries on the y-axis and years on the x-axis Chronic non-chronic
+
+# Create a reference data frame with all combinations of countries and years from 2012 to 2023
+country_years <- expand.grid(country = unique(chronic$country), 
+                             year = 2012:2023)
+
+# Merge the reference data frame with the original data
+merged_data <- merge(country_years, chronic, by = c("country", "year"), all.x = TRUE)
+
+# Replace NA values in fatalities column with 0
+merged_data$fatalities[is.na(merged_data$fatalities)] <- 0
+
+# Calculate proportion of years with fatalities for each country
+country_proportions <- merged_data %>%
+  group_by(country) %>%
+  summarise(fatality_proportion = mean(fatalities > 150))  #%>%
+#filter(fatality_proportion >0.75)  # Filter countries with > 75% fatality proportion
+
+# Filter data for selected countries
+filtered_data2 <- merged_data %>%
+  filter(country %in% country_proportions$country) %>%
+  group_by(country, year) %>%
+  summarise(fatalities = sum(fatalities, na.rm = TRUE)) %>%
+  filter(!is.na(country)) |> 
+  mutate(country = factor(country))
+
+# Assuming you have a dataset named country_proportions with columns 'country' and 'proportion'
+font_color <- as.character(norad_cols("darkred"))
+country_colors <- filtered_data2 |>
+  mutate(n_years = n_distinct(year),
+         severe = fatalities > 150) |> 
+  group_by(country, n_years) |> 
+  summarize(severe_years = sum(severe)) |> 
+  mutate(severe_atleast75 = severe_years / n_years >= 0.75,
+         colors = ifelse(severe_atleast75, font_color, "black")) |> 
+  pull(colors) |> 
+  rev() # NBNBNB! Needed if doing forcats::fct_rev(country) to get alphabetical ordering 
+
+ggplot(data = filtered_data2, aes(x = factor(year), y = forcats::fct_rev(country), fill = fatalities > 150)) +
+  geom_tile(width = 0.9, height = 0.9) +
+  scale_fill_manual(labels = c("No", "Yes"),
+                    values = c("FALSE" = "#B4EAC9", "TRUE" = "#03542D")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), axis.text.y = element_text(color = country_colors),
+        axis.line = element_blank(), axis.ticks = element_blank()) +
+  #scale_x_continuous(labels = scales::number_format(accuracy = 1)) +
+  #scale_y_discrete(labels = function(x) {
+  #  ifelse(x %in% country_proportions$country[country_proportions$fatality_proportion > 0.75], paste0(" *", x), x)
+  #}) + 
+    labs(x = NULL, y = NULL, 
+         title = "Countries in conflict, 2012–2023",
+         fill = "In conflict\n>=150 fatalities")
+
+
+```
+
+But what happened if we jump further back in time, by three decades? Are there any countries for which peace has been the exception rather than the norm? Sadly, yes. There are a few that have experienced conflicts (of varying degrees of intensity) almost non-stop over the last 30 years. @fig-figure3 illustrates the historical conflict dynamics of some of these countries (among those not shown in the figure are e.g. India and the Philippines).
+
+```{r}
+#| label: fig-figure3
+#| column: body
+#| fig-width: 10
+#| fig-height: 2
+#| fig-cap: "Some countries have experienced conflicts for over 30 years. Source: Norad's elaborations based on UCDP"
+#| fig-alt: ""
+
+#figure 3: heatmap very chronic crises 1990-2023
+df <- read_excel("figures.xlsm", sheet = "fig.3")
+
+#pivot the data frame into a long format
+#import sheet named 'fig3' 
+
+#pivot the data frame into a long format
+very_chronic <- df %>%
+  pivot_longer(
+    cols = c('1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'),
+    names_to = 'year',
+    values_to = 'fatalities'
+  ) |> 
+  mutate(year = as.integer(year))
+
+# Assuming you have a dataset named country_proportions with columns 'country' and 'proportion'
+
+
+ggplot(data = very_chronic, aes(x = year, y = country, fill = ifelse(is.na(fatalities), "No", "Yes"))) +
+  geom_tile(width = 0.9, height = 0.9) +
+  scale_fill_manual(labels = c("No", "Yes"),
+                    values = c("No" = "#B4EAC9", "Yes" = "#03542D")) +  # Adjust the color values
+  #theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  #scale_x_discrete() +
+  labs(x = NULL, y = NULL, fill = "In conflict\n>=150 fatalities", 
+       title = "Countries in conflict, 1990–2023") +
+  theme(axis.line = element_blank(), axis.ticks = element_blank())
+
+```
+
+## Being trapped in a conflict-poverty spiral
+
+Maybe not surprisingly, the countries in @fig-figure3 (and many in @fig-figure2 as well) are low and lower-income economies. Why is this relevant? Conflict and poverty reinforce each other in what researchers call a two-way (or bidirectional) causality. High levels of poverty make conflicts more likely to erupt;[^3] at the same time, conflicts and wars further aggravate the socio-economic conditions of the population of these countries, pushing them further into poverty. The longer a country experiences conflicts, the worse the consequences are. @mueller2020conflict compare poverty rates over time in three groups of countries based on the proportion of conflict years: 0 percent, 0–30 percent and over 30 percent. The poverty rate is significantly higher for countries with over 30 percent conflict years than the other two groups, with countries having 0–30 percent conflict years falling in between. They suggest that the poverty rate in the most conflict-affected areas would have been 5–10 percentage points lower after the conflict period if the conflict had not occurred. As for conflicts and economic growth, @mueller2016cost estimated that an average conflict lasting four years reduces GDP per capita by 18 percent compared to scenarios without conflict.
+
+[^3]: [This brief](https://assets.publishing.service.gov.uk/media/5980670a40f0b61e4b00003e/Poverty-and-conflict_RP.pdf) provides an overview of relevant studies.
+
+These studies appear even more worrying if we read them in light of the current scenarios, where not only countries may experience more than a conflict at once, but also more long-lasting. The authors also estimate that even after six years from the end of the conflict, GDP per capita remains 15 percent below the level without conflict. In other words, the effects of many of these conflicts are long-lasting and persist over time. @fig-figure4 offers a comparison over time of the average GDP per capita for the world and for two selected countries that have been shown in @fig-figure3, being stuck in chronic crises for decades. Not only there is a remarkable difference in levels, but also in trends, with a moderately upward trajectory for the world, and a declining one for the two selected countries.
+
+```{r}
+#| label: fig-figure4
+#| column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Declining GDP in Sudan and Afghanistan, two countries severly affected by protracted conflict. Source: WDI/World Bank"
+#| fig-alt: ""
+
+df <- read_xlsx("figures.xlsm", sheet = "fig 4", skip = 2) |> 
+  rename("year" = Time) |> 
+  pivot_longer(-year, names_to = "country", values_to = "gdppc")
+
+df |> 
+  ggplot(aes(year, gdppc, color = country, group = country)) +
+  geom_line() +
+    labs(x = NULL,
+       y = "GDP per capita",
+       title = "GDP per capita, selected countries",
+       subtitle = "PPP, constant 2017 USD",
+       color = NULL) +
+  scale_color_norad() +
+  guides(color = guide_legend(reverse = TRUE))
+```
+
+## Aid darlings or aid orphans?
+
+### Long-term and humanitarian assistance
+
+Aid represents a crucial resource for countries in protracted conflicts and wars. In fact, they normally experience a high degree of political instability, inability to mobilize both taxes and private investments. As a direct consequence, they heavily depend on both long-term aid and humanitarian assistance. Given the protracted nature of these crises, the line of demarcation between long-term and humanitarian aid becomes, often, blurred. The population in these countries may expect to receive humanitarian aid for the main part of their lives [@milante2022chronic].
+
+Not all crises, though, receive the same attention by the media and the public discourse. The Norwegian Refugee Council (NRC) publishes, yearly, the list of the ten neglected crises in the world (countries in Africa dominate the list).[^4] In 2022, the NRC estimated that “for every dollar raised per person in need in Ukraine, just 25 cents were raised per person in need across the world’s 10 most neglected crises”. The presence (or lack) of media coverage can, indeed, contribute to the mobilization of (private) funding for emergencies [@stoianova2013private]. This may also be reflected in development assistance, as the targeting is “frequently better explained by the political and strategic interests of donors, rather than the need or merit of the recipient” [@mitchell2020countries] . Connected to this point is also the issue of aid fragmentation, which can put at risk the optimal aid allocation, with donors rather doing what their peers do, and sometimes failing to assess whether there may be some major gaps/missing opportunities in the global aid landscape.
+
+[^4]: The top 3 neglected crises were Burkina Faso (1); DRC (2); Colombia (3).
+
+### Working on conflict prevention and resolution
+
+Not only humanitarian and long-term assistance, but also peace aid (which, according to OECD, includes the DAC sector 152 as core activity, and 151 as secondary activity) is considered as a crucial element in these contexts, covering those types of interventions aiming at preventing and resolving conflicts. “Without peace, humanitarian needs will not decrease, nor will development objectives be reached” [@oecd2023peace]. When looking at the total international aid for civilian peacebuilding, conflict prevention resolution (DAC sub-code 152.20), over the same period, see @fig-figure5, Afghanistan ranks first, followed, though, by a wide margin, by several of the countries identified as in highly chronic crises due to very prolonged conflicts. This figure shows only a partial picture (and only a particular sub-sector), as it does not cover the whole range of core peace activities. Nevertheless, it still provides some insights in connection to the chronic crises. However, as also highlighted by the @oecd2023peace, the share of aid spent on peace interventions (in its broad definition) is still too limited compared to the rest of ODA.[^5] In addition to that, the spectrum of development actors has broaden substantially, becoming bigger, making coordination among donors more difficult as they need to find complementary ways to co-exist and implementing effective and long-lasting peace interventions [@oecd2023peace].
+
+[^5]: This is based on what statistics show; however, there may be some limitations in reporting/coding of activities targeting peace interventions.
+
+```{r}
+#| label: fig-figure5
+#| column: body
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Large peace-building efforts in war-torn countries have been channeled through the aid system in recent decades. Note: In the absence of a well-established definition of  ‘chronicity’, a degree of discretion in the methodological approach needs to be exerted. Countries are classified as in prolonged conflict if there was a conflict with at least 150 yearly fatalities in at least 75 percent of the years in the period 1990–2023. Source: Norad’s elaboration based on UCDP and OECD data."
+#| fig-alt: ""
+
+df <- read_xlsx("figures.xlsm", sheet = "fig 5", skip = 11) |> 
+  rename("recipient" = Recipient) |> 
+  pivot_longer(-recipient, names_to = "year", values_to = "disb_usd_mill") |> 
+  filter(year != "Total") |>  
+  group_by(recipient) |> 
+  summarize(disb_usd_mill = sum(disb_usd_mill, na.rm = TRUE)) |> 
+  mutate(fill_conflict = ifelse(recipient %in% c("Afghanistan", "Iraq", "Sudan", "Somalia", "Democratic Republic of the Congo"), "Yes", "No"))
+
+df |> 
+  ggplot(aes(reorder(recipient, disb_usd_mill), disb_usd_mill, fill = forcats::fct_rev(fill_conflict))) +
+  geom_col() +
+  coord_flip() +
+  labs(y = "Million USD", x = NULL,
+       title = "Aid for peace building, conflict prevention and resolution, 2004–2022",
+       subtitle = "All DAC donors, million USD (fixed 2022-prices)",
+       fill = "Prolonged conflict") +
+  scale_fill_norad() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+```
+
+## No easy shortcuts for solving complexity
+
+We should always keep in mind the presence of high risks when operating in conflict-affected countries (and more in general fragile contexts). This volatility is also reflected in a higher likelihood (up to 8 percentage points) for projects in fragile countries to be less successful than the ones in non-fragile countries [@caselli2020]. Some donors, more willing to take risks, may try their best to effect change in extremely difficult conditions. However, this may come at the expense of achieving successful outcomes in the short term. Operating with complexity is not an easy task and, therefore, we should not expect to solve it easily. This is not a linear process. Failing and adjusting are crucial elements to learn along the way.

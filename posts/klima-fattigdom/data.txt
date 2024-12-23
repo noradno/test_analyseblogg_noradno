@@ -1,0 +1,6 @@
+"Ekstrem fattigdom (2,15 USD)",	Heve forbruket til de fattige,	1
+"Lavere mellominntektsland (3,65 USD)",	Heve forbruket til de fattige,	5
+"Høyere mellominntektsland (6,85 USD)",	Heve forbruket til de fattige,	18
+"Ekstrem fattigdom (2,15 USD)",	Økonomisk vekst,	4.9
+"Lavere mellominntektsland (3,65 USD)",	Økonomisk vekst,	15.3
+"Høyere mellominntektsland (6,85 USD)",	Økonomisk vekst,	45.7

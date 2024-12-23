@@ -1,0 +1,229 @@
+---
+title: "Inflasjon og valutauro -- Pengepolitiske dilemmaer i pressede afrikanske økonomier"
+format: html
+bibliography: library.bib
+author: 
+  - name: Lars Loe
+categories:
+  - makro
+  - pengepolitikk
+  - afrika
+date: 2024-02-12
+lightbox: true
+language:
+  nb:
+    crossref-nte-title: "Boks"
+    crossref-nte-prefix: "Boks"
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+I de senere årene har [svekkelse av valutakursene i Afrika sør for Sahara](https://www.imf.org/-/media/Files/Publications/REO/AFR/2023/April/English/ExchangeNote.ashx) forsterket det allerede høye inflasjonspresset, økt underskuddene i utenriksøkonomien og bidratt til økning av gjeld som andel av BNP med 10 prosentenheter. Dette har kommet på toppen av det kraftige tilbakeslaget som Covid-19-pandemien påførte økonomiene. Valg av pengepolitikk kan ha stor betydning for hvor godt sårbare økonomier greier å stå imot økonomiske sjokk.
+
+*Lars Loe er samfunnsøkonom og fagdirektør i seksjon for statistikk og analyse.*
+
+Utviklingen i regionen reflekterer at politikkvalget reiser en rekke dilemmaer der riktig svar kan være forskjellig fra land til land og endrer seg over tid. Ved starten av 80-tallet hadde nesten alle land i Afrika sør for Sahara fastkursregimer eller noe mer fleksible former for valutakursstyring («mellomformer»).[^1] Ved årtusenskiftet hadde denne andelen falt til rundt halvparten. Etter finanskrisen som startet i 2008 valgte mange land å gå tilbake til styring av valutakursen som operativt mål i pengepolitikken.[^2]
+
+[^1]: Norge hadde ulike former for fastkurspolitikk fram til 2001, se [Pengepolitikk i et historisk perspektiv (norges-bank.no)](https://www.norges-bank.no/aktuelt/nyheter-og-hendelser/Foredrag-og-taler/2008/Gjedrem-2008-09-16/).
+
+[^2]: IMF skiller mellom formelt og reelt valutakursregime etter hvordan det praktiseres. Mange land i Afrika knytter sin valuta mot USD eller EURO. IMF opererer også med underkategorier av «mellomløsninger», som innebærer ulike måter å styre valutakursen på uten at det siktes mot helt fast kurs. Se [Annual Report on Exchange Arrangements and Exchange Restrictions 2022 (imf.org)](https://www.imf.org/en/Publications/Annual-Report-on-Exchange-Arrangements-and-Exchange-Restrictions/Issues/2023/07/26/Annual-Report-on-Exchange-Arrangements-and-Exchange-Restrictions-2022-530144).
+
+```{r}
+#| warning: false
+#| label: fig-figure1
+#| fig-cap: "Store endringer i valutaregimer i Afrika sør for Sahara. Kilde: IMF AREAER database og @IMF2016."
+#| fig-alt: "Stablet søylediagram som viser endringen i valutakursregimer i Afrika sør for Sahara siden 1980. I begynnelsen av perioden hadde de fleste fastkurs. På 90-tallet byttet mange til flytende kurs, mens etter finanskrisen har vi sett en dreining mot mer styring igjen."
+#| fig-width: 8
+#| fig-height: 4
+
+
+library(dplyr)
+library(noradplot)
+library(readr)
+library(tidyr)
+library(ggplot2)
+
+# Get income groups and regions
+wdi <- readRDS("wdi.rds")
+
+rg <- c("Flytende valutakurs", "Fast valutakurs", "Mellomformer")
+
+# Exchange rate regimes, 1998-2021
+regime <- read_csv("AREAER-DataQueryReport_01.25.2024.csv", 
+                   show_col_types = FALSE) |> 
+  janitor::clean_names() |> 
+  filter(status == "yes") |> 
+  mutate(
+    iso3c = countrycode::countrycode(country, "country.name", "iso3c"),
+    category = case_match(
+      category,
+      # Old categories pre 2008 (some are continued also after 2008)
+      # Floating
+      "Independently floating" ~ rg[1],                    
+      "Managed floating with no pre-determined path for the exchange rate" ~ rg[1],
+      # Fixed
+      "Conventional pegged arrangement" ~ rg[2],
+      "Currency board arrangement" ~ rg[2],
+      "Exchange arrangement with no separate legal tender" ~ rg[2],
+      # Intermediate
+      "Crawling band" ~ rg[3],
+      "Crawling peg" ~ rg[3],
+      "Pegged exchange rate within horizontal bands" ~ rg[3],
+      # New categories from 2008
+      # Floating
+      "Floating" ~ rg[1],
+      "Free floating" ~ rg[1],
+      "Other managed arrangement" ~ rg[1],
+      # Fixed
+      "Conventional peg" ~ rg[2],
+      "Currency board" ~ rg[2],
+      "No separate legal tender" ~ rg[2],
+      "Stabilized arrangement" ~ rg[2],
+      # Intermediate
+      "Crawl-like arrangement" ~ rg[3],
+      .default = category
+    )
+  ) |> 
+  mutate(category = factor(category, levels = rg)) |> 
+  left_join(wdi, by = "iso3c") |> 
+  filter(region == "Sub-Saharan Africa") |> 
+  group_by(year, category) |> 
+  summarize(n = n()) |>
+  mutate(percent = n / sum(n))
+
+# Exchange rate regimes, 1980-2014
+regime_1980_2014 <- readxl::read_xlsx("regimer_1980-2014.xlsx") |> 
+  pivot_longer(-`...1`) |> 
+  setNames(c("category", "year", "percent")) |> 
+  mutate(year = as.numeric(year),
+         percent = percent / 100,
+         category = factor(category, levels = rg))
+  
+ggnorad()
+
+regime |> 
+  full_join(regime_1980_2014, by = c("category", "year"), suffix = c("", "_r")) |> 
+  mutate(percent = ifelse(year <= 1998, percent_r, percent)) |> 
+  ggplot(aes(year, percent, fill = category)) +
+  geom_col(position = position_fill(reverse = TRUE)) +
+  scale_y_continuous(expand = c(0, 0), labels = scales::label_percent()) +
+  scale_fill_norad() +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(title = "Valutaregimer i Afrika sør for Sahara, 1980–2021",
+       subtitle = "Andel land i gitt regime",
+       y = NULL,
+       x = NULL,
+       fill = "Valutaregime")
+
+```
+
+I krisetider blir det fort krevende å opprettholde en fast kurs. Dette illustreres av at myndighetene til slutt må gi etter og devaluere, slik det nylig har skjedd i [Nigeria](https://www.bbc.com/news/business-30196496) og [Malawi](https://www.bbc.com/news/world-africa-67367983). Disse eksemplene føyer seg inn i en rik global historikk av valutakriser. Av de store er [Asiakrisen](https://www.britannica.com/money/topic/Asian-financial-crisis) i 1997–98, som startet med at flere lands valutaer ble mer enn halvert i verdi før krisen spredte seg regionalt og globalt. Valutakriser må forstås og diskuteres som symptomer på mer grunnleggende problemer, både nasjonalt og internasjonalt. [Debatten](https://www.theguardian.com/commentisfree/2007/jul/02/theasiancrisis10yearslat) har vært intens både om årsaker, hva som ville vært best politikk og ikke minst den internasjonale finansarkitekturen med IMF sin rolle.
+
+## Fri eller fast valutakurs?
+
+Fast valutakurs bidrar til forutsigbarhet i priser i handelen med utlandet og gjør at inflasjonsimpulser utenfra ikke blir forsterket av svekket valutakurs. Utfordringen er typisk at med press nedover på kursen må sentralbanken ha fremmed valuta nok til støttekjøp av egen valuta (i beste fall støtte fra andre sentralbanker), sette renten kraftig opp (for å gjøre investeringer i nasjonal valuta attraktiv) eller regulere omsetningen av fremmed valuta.[^3]
+
+[^3]: Det sentrale virkemiddelet i pengepolitikken er sentralbankens styringsrenter. Et annet sett av virkemidler er markedsoperasjoner, det vil si sentralbankens kjøp og salg av verdipapirer som obligasjoner (omsettelige lån) og valuta.
+
+Det siste innebærer ofte at myndighetene rasjonerer valutaen til avgrensede formål og fører til et [parallellmarked](https://blogs.worldbank.org/voices/parallel-exchange-rate-problem-world-banks-approach-helping-people-developing-countries) (svartebørs) som er vel kjent for turister i mange land. Det kan gi betydelige makroøkonomiske tap i form av redusert produksjon/inntekt. Det kan begrense produksjonen til næringslivet fordi tilgang på nødvendige innsatsfaktorer fra utlandet begrenses. Det gir også muligheten for såkalt tilkarringsvirksomhet («rent-seeking»)[^4] for de som er i posisjon til å kjøpe valutaen billig til offisiell kurs og selge den i parallellmarkedet.[^5]
+
+[^4]: Når en kan oppnå gevinster ved å utnytte at det er forskjellig pris på samme finansobjekt kalles det generelt arbitrasje. I dette tilfellet er poenget at noen få er i posisjon til å utnytte denne muligheten, dermed er det en spesielt skadelig virksomhet ved at disse legger beslag på inntekter som ikke reflekterer verdiskaping, men tvert i mot er skadelig.
+
+[^5]: En klassisk studie av Uganda fra 1995 estimerte at gevinsten til de som fikk tilgang på billig valuta rett før myndighetene opphevet reguleringene utgjorde et sted mellom 5 og 10 prosent av landets BNP [@morris_1995].
+
+Disse utfordringene taler for mer flytende valutakurs. Samtidig vil flytende kurs fungere som buffer og justeringsmekanisme når det oppstår ubalanser i form av store underskudd i utenriksøkonomien og raske kapitalbevegelser. En flytende kurs kan dempe et økende underskudd i utenriksøkonomien ved at prisen på nasjonal valuta faller mot utenlandsk valuta. Det gjør prisen på varer fra utlandet (i nasjonal valuta) høyere og demper importen, mens eksportører kan øke markedsandeler og eksportvolum ved å senke prisen i utenlandsk valuta.
+
+## Frie eller regulerte kapitalbevegelser?
+
+Hvor raskt og fleksibelt markedsmekanismer virker på valutakurs, kreditt og investeringer, og dermed hvordan pengepolitikken fungerer, avhenger av reguleringsregime: Hvor fritt valuta og andre finansobjekter kan omsettes i det åpne markedet. Det teoretiske hovedargumentet for frie kapitalbevegelser er at kapitalen finner veien dit den gir høyest avkastning som gir mer effektiv allokering av samfunnets ressurser og høyere økonomisk vekst. Hovedargumenter mot er at hurtigheten i finansielle strømmer kan destabilisere en økonomi og skape uforutsigbarhet. Hva som totalt sett er mest gunstig er et empirisk spørsmål, og kan være forskjellig fra økonomi til økonomi. [IMF](https://www.norges-bank.no/tema/Om-Norges-Bank/internasjonalt-samarbeid/det-internasjonale-valutafondet-imf/) sitt syn er spesielt viktig ut fra fondets faglige tyngde og rolle som finansinstitusjon. Fra å være en ganske konsekvent tilhenger av frie kapitalbevegelser har institusjonen blitt noe mer nyansert og IMF er nå mer positiv til regulering av kapitalbevegelser enn tidligere [@IMF2022].
+
+## Hvor selvstendig pengepolitikk?
+
+Med fastkurspolitikk vil pengepolitikken som nevnt kunne bli «slave» av det som trengs for å støtte den nasjonale valutaen.[^6] Det kan bety at renten må settes svært høyt for å støtte valutaen i situasjoner hvor økonomien ellers trenger lavere rente.[^7] Størst selvstendighet i pengepolitikken oppnås i teorien med flytende kurs, i den forstand at mest vekt kan legges på brede makroøkonomiske og finansielle hensyn.[^8] De fleste rike land og et økende antall lav- og mellominntektsland har uavhengige sentralbanker som setter renter ut fra et inflasjonsmål.[^9] Denne løsningen betyr at pengepolitikken får en tyngre rolle i stabiliseringspolitikken mens staten i sin budsjettpolitikk kan legge mer vekt på rollen som tjenesteyter, investor og omfordeler. I praksis har som vi skal se særtrekk ved finansmarkedene i landene – hvor utviklet de er og hvor fritt transaksjoner får flyte – likevel stor betydning for hva som fungerer best.
+
+[^6]: Når sentralbanken setter opp styringsrenten blir det mer attraktivt å kjøpe finansobjekter i nasjonal valuta, som betyr at valutakursen kan styrkes. Under valutakriser blir ofte presset stort som følge av storstilt spekulasjon, og rentene må høyt for å få effekt. I 1992 hadde Sverige fastkurs mot forløperen til Euro(ECU). Den svenske sentralbanken hevet renten opp tilsvarende årlig rente på 500 prosent for å forsvare krona før den ga opp. Det er mange eksempler på liknende tilfeller, se f.eks. [Central Banking Revolutionary (imf.org)](https://www.imf.org/en/Publications/fandd/issues/2023/03/PIE-central-banking-revolutionary-lars-svensson).
+
+[^7]: Kroneksemplet på forskjeller mellom land er oppgang i petroleumspriser som lett gir høykonjunktur og behov for økt rente i oljeeksporterende land men det motsatte i oljeimporterende land. Et ytterpunkt av dette tilfellet er valutaunioner. Når flere land har samme valuta mister de sin nasjonale pengepolitikk til fordel for den felles pengepolitikken til den felles sentralbanken. Når en kan låne i samme valuta i alle land i valutaunionen virker sentralbankrenten i hele valutaområdet samtidig. Det kan bety at sentralbanken må sette en rente som er for høy for noen land, og for lav for andre.
+
+[^8]: Mange land i Afrika og ikke minst sårbare stater styrer mot et pengemengdemål i stedet for inflasjon. Under dette ligger for det første en antakelse om at inflasjon og mengden penger i omløp henger sammen over tid. For det andre at tilgangen er for liten på makroøkonomiske data som gjør inflasjonsstyring praktisk mulig [se @adam_wilson_2021].
+
+[^9]: Inflasjonsmål på rundt to prosent er vanlig i rike land. En viss inflasjon er ønskelig av hensyn til rom for endringer i relative priser fordi priser ofte er mindre fleksible nedover enn oppover. Lav inflasjon er ønskelig ut fra hensynet til forutsigbarhet fordi svingningene øker med inflasjonsraten.
+
+::: {#nte-trilemma .callout-note collapse="true" icon="true"}
+### Et makropolitisk trilemma
+
+::: flex-container
+::: {.flex-item .item-1}
+Hovedpoenget i figuren til høyre er at myndighetene ikke kan velge politikken representert ved mer enn to av hjørnene i trekanten. Valg av politikkombinasjon må avgjøres av nasjonale preferanser og hvor sterkt ulike politikkvalg kommer i konflikt med hverandre i ut fra spesifikke mekanismer i økonomien.
+:::
+
+::: flex-item
+![](trilemma.png){fig-align="center" width="80%"}
+:::
+:::
+
+```{=html}
+<style>
+  .flex-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .flex-item {
+    padding: 10px;
+    padding-bottom: 0px;
+    margin: 10px;
+    flex-grow: 1; 
+  }
+
+  .item-1 {
+    flex-basis: 100%; 
+  }
+  
+  .item-list {
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+</style>
+```
+::: flex-container
+::: {.flex-item .item-list}
+### 1. Fast valutakurs og frie kapitalbevegelser
+
+Hvis myndighetene ønsker fordelene med stabil valutakurs og frie kapitalbevegelser samtidig, blir friheten til å bruke sentralbankrenten i stabiliseringspolitikken begrenset eller forsvinner. Finanspolitikken vil sjelden kunne fylle tomrommet i stabiliseringspolitikken som da oppstår. Den må i stor grad utformes ut fra andre og delvis langsiktige hensyn, som hvilke offentlige oppgaver som skal løses. Den kan dessuten ikke endres like raskt som pengepolitikken. Sluttresultatet kan bli for stor ustabilitet i økonomien med potensielt langvarige kostnader for investeringsvilje og vekst.
+
+### 2. Fast valutakurs og selvstendig pengepolitikk
+
+Et alternativ er å tilstrebe både stabil valutakurs og frihet til å drive egen pengepolitikk. Uten restriksjoner på valutahandel og kapitalbevegelser vil pengepolitikken ha effekt på innenlandsk etterspørsel og valutakursen samtidig. Hvis pengepolitikken (sentralbankrenten) skal kunne settes mer uavhengig av hensynet til valutakursen, krever det restriksjoner på valutahandel og andre utenriksøkonomiske transaksjoner. Slik regulering av kapitalbevegelsene vil innebære kostnader, ikke minst ved at det skaper hindringer for drift og investeringer i næringslivet.
+
+### 3. Selvstendig pengepolitikk og frie kapitalbevegelser
+
+Den tredje utveien er å gi slipp på fast valutakurs og velge kombinasjonen selvstendig pengepolitikk og frie kapitalbevegelser. I dette alternativet blir utfordringen potensielt store svingninger i valutakursen og raske kapitalbevegelser som virker destabiliserende. Sammenliknet med alternativ 1 er til gjengjeld rommet for å bruke pengepolitikken til å ivareta makroøkonomiske mål som inflasjon og aktivitetsnivå større.
+:::
+:::
+:::
+
+### Kursregimene har sterke sider på ulike områder
+
+@nte-trilemma illustrerer et velkjent pengepolitisk trilemma, nemlig valget mellom fast valutakurs, frie kapitalbevegelser og selvstendig pengepolitikk. Maks to av tre er mulig samtidig, og hvilken av de tre politikkombinasjonene som er best for et land kan ikke avgjøres teoretisk. Det [avhenger både av økonomienes ulike virkemåter og forskjellig vektlegging av hensynene](https://www.elibrary.imf.org/display/book/9781589069312/9781589069312.xml) som må avveies. Flytende kurs og inflasjonsstyring har blitt den typiske kombinasjonen i moderne økonomier. Landene i Afrika sør for Sahara har et annet utgangspunkt. Det typiske er svak makroøkonomisk styringsinformasjon og mindre utviklede finansmarkeder. Dette begrenser muligheten for inflasjonsstyring mer enn for valutakursstyring som krever mindre styringsdata. [IMF finner dessuten at erfaringene når det gjelder virkemåten til ulike valutakursregimer er blandet](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwj4mcPbz4eDAxX4KhAIHT-UDecQFnoECBQQAQ&url=https%3A%2F%2Fwww.imf.org%2F-%2Fmedia%2FWebsites%2FIMF%2Fimported-flagship-issues%2Fexternal%2Fpubs%2Fft%2Freo%2F2016%2Fafr%2Feng%2Fpdf%2F_chapter21016pdf.ashx&usg=AOvVaw0ZGIHxnmiW_e2iIYxg0xSI&opi=89978449) i denne regionen:
+
+-   Inflasjon: Land med en type fastkurspolitikk («pegs») har hatt lavere inflasjon enn land med helt eller delvis flytende kurs (mellomløsninger).
+
+-   Vekst i BNP per innbygger: Flytende kursregimer tenderer å ha gitt gunstigste resultater. En mulig forklaring er at fastkurs med kunstig dyr valuta har svekket konkurranseevnen.
+
+-   Fiskal disiplin (orden i statsfinansene): Ytterpunktene fast og flytende kurs har vært mer gunstig for fiskal disiplin enn mellomløsninger. At flytende kurs gir høy fiskal disiplin er helt etter teorilæreboka (renten som «ris bak speilet»). At fastkurs gjør det er mindre entydig teoretisk fundert, men IMF peker på et «ris bak speilet»-argument her også; løssluppen finanspolitikk vil tappe valutareserver gjennom økt import.
+
+Den pengepolitiske historikken i regionen reflekterer dette blandede bildet.
+
+## Økonomier under press – noe må gi etter
+
+Pengepolitikken kan ikke eliminere slike kraftige tilbakeslag som Afrikanske økonomier har blitt påført gjennom pandemi, inflasjon og urolige finansmarkeder. En viktig begrensning på kapasiteten til å beskytte folk og makroøkonomi er lavt inntektsnivå. Hvis et lavinntektsland øker statsbudsjettet med en prosent av BNP, utgjør det en økning på rundt 200 kroner per innbygger. Det tilsvarende tallet for Norge er over 10 000 kroner.[^10]
+
+[^10]: Tallene er kjøpekraftsjustert. Uten kjøpekraftsjustering, som betyr at pengeverdien i lavinntektsland oppjusteres fordi prisnivået er lavere. blir forskjeller i inntekt mv. mellom rike og fattige land mye større.
+
+Pengepolitikk er likevel viktig for hvordan sjokk dempes og finansiell forutsigbarhet bevares, noe som igjen påvirker rommet for å bruke finanspolitikken. Dette ble klart illustrert ved at netto ekstrabruk av budsjettmidler på Pandemien i lavinntektsland var under to prosent, mot godt over tyve prosent i rike land [@IMF2021]. Denne begrensningen på handlefrihet i finanspolitikken skyldes delvis pengepolitiske faktorer.[^11] Konsekvensen ble at [tilbakeslaget etter Pandemien ble lengre og skadene på varig vekstevne større](https://www.imf.org/en/Publications/WP/Issues/2023/08/04/Revisiting-Covid-Scarring-in-Emerging-Markets-537590) i fattigere enn i rikere land. Framover vil både egne politikkvalg og tilgangen på internasjonal finansiell støtte avgjøre om framgangen – som regionen sårt trenger – blir stor nok.
+
+[^11]: «…limited access to financing and little space for monetary policy support significantly restricted the scope for policy responses in LICs, including discretionary fiscal measures» [@IMF2021, s. 10].

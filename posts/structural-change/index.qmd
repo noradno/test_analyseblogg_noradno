@@ -1,0 +1,290 @@
+---
+title: "Structural change and development: an overview"
+format: html
+bibliography: library.bib
+author: 
+  - name: Carola Casti
+categories: 
+  - forskning
+  - utvikling
+  - vekst
+date: 2023-11-09
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+This blog post delves into the significance of structural change, offering insights into the prominent trends observed across different global regions and income categories. Additionally, it explores the potential prospects for developing economies, shedding light on the key obstacles and possibilities that may arise throughout this economic transformative process.
+
+*Carola Casti is an economist (PhD) and Senior Adviser in the Section for Statistics and Analysis.*
+
+## What is structural change?
+
+Labour productivity plays a crucial role in economic growth and development. In its broad economy meaning, it can be decomposed into two major channels [@mcmillan2014globalization]: i) the productivity within sectors (within component); and ii) the productivity effect of labour reallocations across different sectors, called structural change.[^1]
+
+[^1]: Often also referred to as 'structural transformation'.
+
+The latter represents one of the core elements for [sustained long-term growth](https://www.imf.org/en/News/Articles/2015/09/28/04/53/soint062813a), as it drives the complexity and the degree of diversification of an economy [@mcmillan2014globalization]. This process, which is, by its very nature, dynamic [@diao2019recent], can be explained as the transition from low productivity and very labour-intensive sectors/economic activities (e.g. agriculture) to more productive and high-skill intensive ones, implying, then, a change in the sectoral composition of the GDP. As economies develop, the share of employment in agriculture tends to decline, while the opposite trend is observed with respect to the service sector (see @fig-figure1).
+
+```{r}
+#| label: fig-figure1
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: "Sectoral employment shares and economic development. Source: Author’s elabouration based on the sample of 51 economies in the GGDC-UNU WIDER dataset."
+#| fig-alt: "Scatter plot of employment shares in agriculture and services by income group, showing a decline in the former and an increase in the latter as countries develop."
+
+library(ggplot2)
+library(noradplot)
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggrepel)
+
+ggnorad()
+
+merged_data_scatterplot <- read_xlsx("merged_data_scatterplot.xlsx", sheet = "Sheet1") |> 
+  janitor::clean_names()
+
+merged_data_scatterplot |> 
+  ggplot(aes(x = l_percent_services, y = l_percent_agriculture, color = income, shape = income)) +
+  geom_point() +
+  labs(title = "Employment share in agriculture and services",
+       subtitle = "By income group",
+       x = "Employment % services", 
+       y = "Employment % agriculture", 
+       color = NULL, shape = NULL) + 
+    scale_color_norad(breaks = c("High income", "Upper middle income", "Lower middle income", "Low income")) +
+    scale_shape_discrete(breaks = c("High income", "Upper middle income", "Lower middle income", "Low income"))
+```
+
+The standard economic view of structural transformation has been based on three stylised facts [@sen2019structural]: 1. Economies experience a declining employment share in agriculture; 2. Economies experience a hump-shaped share of employment in industry (with a focus on the manufacturing sector which represents its main component) at early stage of development, whereas the share decreases as the economy develops; 3. Economies experience an increasing employment share in services.
+
+Looking at the compositional changes of an economy over time and across countries can be relevant from a policy standpoint. It provides valuable insights into how the future growth potential of the economies may unfold. This aspect becomes even more relevant when focusing on today's low-income economies, as their growth trajectory can differ significantly from the one of other countries that undertook a miraculous growth, such as the Asian tiger economies (often referred to as the 'Asian miracle').[^2] This may raise important questions about how and to what extent and low-income economies will be able replicate this pattern in the near future [@nayyar2021at]. In other words, is a service-led development model a concrete possibility for poorer economies?
+
+[^2]: Taiwan (China), Hong Kong (China), South Korea, Singapore and China.
+
+## What are the drivers of structural change?
+
+According to economic theory, changes in productivity within the manufacturing and services sectors (which are frequently referred to as 'modern sector') are considered the main engine to ensure this transition and to secure a more diversified economy [@habitat2016structural]. For the modern sector to grow and prosper, though, a fostering institutional environment (e.g. competition policies) and the availability of human capital are essential elements. The more traditional path of structural change lies in the reallocation of workers from agriculture to manufacturing and service first, and then out of manufacturing and into services. This has been considered the paradigmatic model, as it had been observed in all developed economies. More recently, though, many have started questioning whether this conventional view holds for structurally underdeveloped countries. In many African low-income countries, for instance, we have witnessed a direct transition of the workforce from the agriculture to non-business services [@sen2019structural]. What are alternative explanations that can explain diverse paths of structural change?
+
+Some structural change pathways may also be, at times, hard to reconcile with social and environmental protection (i.e. the heavy industrialization wave witnessed in China), necessary condition for the transformative change advocated by the 2030 agenda [@islam2018structural]. This raises important questions, as the paradigmatic model of structural change has often been the result, de facto, of an unsustainable development pathway embraced by high and upper-middle income economies for a long time.
+
+## Trends in structural change
+
+For the scope of this post, we limit our analysis to a sample of 51 economies, based on the latest available data of [The Economic Transformation Database](https://www.rug.nl/ggdc/structuralchange/etd/?lang=en) from UNU-WIDER and GGDC [@wider2021economic].[^3]
+
+[^3]: The ETD *"has better coverage of low-income developing countries, distinguishes 12 sectors in the International Standard Industrial Classification, Revision 4 (ISIC rev. 4) classification, and has time series that run until 2018."* From a project supported by UNU-WIDER and run by the GGDC (Groningen Growth and Development Centre). Insert link The dataset includes data for 51 (mostly developing and poor) economies: 21 in Africa, 9 in Latin America, and 21 in Asia; 12 sectors of the total economy following the ISIC rev. 4 industry classification; time series with annual data from 1990 to 2018 (last release in 2021).
+
+@fig-figure2 shows the aggregate trends over time of both sectoral employment and valued added share (VA) for the sample of 51 economies included in the ETD.[^4] We observe an overall decrease by 17 percentage points (35 percent reduction) in the employment share and by 8 percentage points in the VA share within the agriculture sector which, though, still employs on average one third of the total labour force (given the huge incidence in the sample of low and lower-middle income economies). Looking at the manufacturing sector, it has experienced a relatively steady trend over the last thirty years, with respect to both employment and VA shares.[^5]
+
+[^4]: With value added we refer to the net output of a sector (netting out intermediate inputs)
+
+[^5]: Several economies had already reached their peak in their manufacturing employment share before the 1960 [@sen2019structural].
+
+```{r}
+#| label: fig-figure2
+#| column: page
+#| layout-ncol: 2
+#| fig-height: 3
+#| fig-width: 6
+#| fig-cap: "Sectoral Employment and Value Added (VA) share, all 51 economies. Source: Author's elaboration based on the GGDC/UNU-WIDER dataset. Note: The left panel shows the trend in the employment share in agriculture (which also include forestry and fishing), manufacturing, and service sector (consisting of trade, transport, business, financial, real estate, government, and other services). The shares do not sum to 100 percent, as the figure excludes the non-manufacturing sector (utilities, construction, and mining)."
+#| fig-subcap: 
+#| - "Employment"
+#| - "Value added share"
+#| fig-alt: "Line chart showing the trend in the employment share in agriculture, manufacturing, and service sector in a group of 51 economies, showing that the employment and value added shares of the services sector grows over time, while it falls in the agricultural sector."
+
+plotdf <- merged_data_scatterplot |> 
+  group_by(year) |> 
+  summarize(across(ends_with(c("_agriculture", "_manuf_industry", "_manuf_ind", "_services")), mean)) |> 
+  pivot_longer(-year) |> 
+  arrange(year, name) 
+
+plotdf |> 
+  filter(grepl("l_", name)) |> 
+  ggplot(aes(year, value, color = name)) +
+  geom_path(linewidth = 1.5) +
+  labs(x = NULL, 
+       y = "Employment share", 
+       color = "Income") + 
+  scale_y_continuous(limits = c(0, 0.6), labels = scales::label_percent()) +
+  scale_color_norad(labels = c("Agriculture", "Manufacturing", "Services"), name = "Sector") +
+  geom_text(aes(x = 2020, label = scales::percent(value, suffix = " %")), 
+                  data = filter(plotdf, year == 2018, grepl("l_", name)), color = "black",
+                  show.legend = FALSE, segment.color = "transparent") +
+  coord_cartesian(clip = "off") +
+  labs(title = "Employment shares by sector",
+       subtitle = "Percent of total employment",
+       x = NULL, 
+       y = NULL,
+       color = "Income")
+
+plotdf |> 
+  filter(grepl("va_", name)) |> 
+  ggplot(aes(year, value, color = name)) +
+  geom_path(linewidth = 1.5) +
+  labs(x = NULL, 
+       y = "Value added share", 
+       color = "Income") + 
+  scale_y_continuous(limits = c(0, 0.6), labels = scales::label_percent()) +
+  scale_color_norad(labels = c("Agriculture", "Manufacturing", "Services"), name = "Sector") +
+  geom_text_repel(aes(x = 2020, label = scales::percent(value, suffix = " %", accuracy = 1)), 
+                  data = filter(plotdf, year == 2018, grepl("va_", name)), color = "black",
+                  show.legend = FALSE, direction = "y", segment.color = "transparent", nudge_x = 1) +
+  coord_cartesian(clip = "off") +
+  labs(title = "Value added shares by sector",
+       subtitle = "Percent of total value added",
+       x = NULL, 
+       y = NULL,
+       color = "Income")
+
+```
+
+Last, the service sector has experienced a steady upward trend both in the employment share and in the VA within the service sector, with an increase by 15 percentage points (44 percentage growth) and 7 percentage points (14%) respectively, over the last three decades. When we do the same exercise and differentiate by income groups, some interesting trends emerge (see @fig-figure3).[^6]
+
+[^6]: Based on the World Bank categorization: High income (Chile, Taiwan (China), Hong Kong (China), Israel, Japan, Rep. Korea, Singapore); Upper-middle income (Argentina, Botswana, Brazil, China, Colombia, Costa Rica, Ecuador, Malaysia, Mauritius, Mexico, Namibia, Peru, South Africa, Thailand, Turkey); lower-middle income (Bangladesh, Bolivia, Cambodia, Cameroon, Egypt, Ghana, India, Indonesia, Kenya, Laos, Lesotho, Morocco, Myanmar, Nepal, Nigeria, Pakistan, Philippines, Senegal, Sri Lanka, Tanzania, Tunisia, Vietnam); low-income (Burkina Faso, Ethiopia, Malawi, Mozambique, Rwanda, Uganda, Zambia).
+
+-   As countries become richer, both employment and VA share in the agriculture sector tend to substantially decrease. In 2018 they amounted, respectively, to 62 percent and 24 percent in low-income countries, while they were almost null (3 percent and 1 percent respectively) in the high-income countries in our sample.
+-   Lower-middle income and low-income countries have witnessed a gradual increase in the employment share in the service sector (but still limited compared to the higher income groups), with a slight increase in the sectoral VA share as well.
+-   In lower-middle income countries the employment share in service has caught up with the one in the agriculture sector, while in low-income countries this gap is still sizable.
+
+```{r}
+#| label: fig-figure3
+#| column: page
+#| layout-ncol: 1
+#| fig-height: 4
+#| fig-width: 12
+#| fig-cap: "Sectoral Employment and Value Added (VA) share, by income group. Source: Author’s elaboration based on the GGDC/UNU-WIDER dataset."
+#| fig-alt: "Line chart showing the trend in the employment share in agriculture, manufacturing, and service sector in a group of 51 economies, by income group."
+
+plotdf <- merged_data_scatterplot |> 
+  group_by(year, income) |> 
+  summarize(across(ends_with(c("_agriculture", "_manuf_industry", "_manuf_ind", "_services")), mean)) |> 
+  pivot_longer(-c(year, income)) |> 
+  arrange(income, year, name) |> 
+  mutate(empl = grepl("l_", name))
+
+labs <- c("Empl % Agriculture", "Empl % Manufacturing", "Empl % Services", "VA % Agriculture", "VA % Manufacturing", "VA % Services")
+
+plotdf |> 
+  ggplot(aes(year, value, color = name, linetype = name)) +
+  geom_path() +
+  labs(x = NULL, 
+       y = NULL) + 
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_linetype_manual(values = c(rep("dashed", 3), rep("solid", 3)), labels = labs, name = NULL) +
+  scale_color_norad(labels = labs, name = NULL) +
+  facet_grid(~factor(income, levels = c("Low income", "Lower middle income", "Upper middle income", "High income"))) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE),
+         linetype = guide_legend(nrow = 2, byrow = TRUE)) +
+  labs(title = "Employment and value added share by sector and income group",
+       subtitle = "Percent of total employment/value added") +
+  theme(legend.position = "bottom", legend.key.width = unit(2, "line"))
+```
+
+-   As for the manufacturing sector, the trend, in both employment and VA share, has been relatively stable over time, but, once again, some interesting differences emerge:
+-   High income economies and upper middle-income economies tend to report systematically a higher VA share in manufacturing as compared to agriculture (but still lower than the service sector), in contrast with the lower-middle- and low-income countries.
+-   While the high-income group tends to employ a relatively higher share of workers in the manufacturing sector, the opposite holds true for the upper-middle group, where the employment share in agriculture still outnumbers the share in manufacturing.
+
+Not surprisingly, in poorer economies, the share of workers in agriculture tends to exceed, by far, the share of agriculture in GDP. This may suggest the presence of an unproductive agricultural sector, relatively to other sectors, i.e. services (see @fig-figure4).
+
+```{r}
+#| label: fig-figure4
+#| column: body
+#| layout-ncol: 1
+#| fig-height: 4
+#| fig-width: 6
+#| fig-cap: "Labor productivity in agriculture and services in low-income countries. Source: World Bank Development indicators (1991-2019). Note: Labour productivity (LP) is defined as the ratio between the value added per worker in agricultural and service sector for the selected sample of countries."
+#| fig-alt: "Line chart showing the trend in labor productivity in agriculture and services in low-income countries."
+# Create the time series plot - but this includes Argentina, while in the figure published in the post, it is not included.
+productivity <- read_xlsx("productivity.xlsx", skip = 1) |> 
+  mutate(year = as.numeric(year))
+
+ggnorad()
+
+productivity |> 
+  ggplot(aes(x = year)) +
+  geom_line(aes(y = Agriculture, color = "Agriculture")) +
+  geom_line(aes(y = Service, color = "Services")) +
+  scale_color_norad() +
+  labs(title = "Labor productivity in low-income countries",
+       subtitle = "Value added in constant 2015 USD",
+       x = NULL,
+       y = "Value added per worker",
+       color = "Sector") 
+```
+
+An alternative and straightforward categorization for economies based on their structural change process is the following [@sen2019structural]:
+
+-   **Structurally developed**: EMPL (Employment) share in service is bigger than the EMPL share in manufacturing which is bigger than the EMPL share in agriculture
+-   **Structurally developing**: EMPL share in service is bigger than the EMPL share in agriculture which is bigger than the EMPL share in manufacturing
+-   **Structurally underdeveloped**: EMPL share in agriculture is bigger than the EMPL share in non agriculture.
+
+Trends across world regions are reported in @fig-figure5, with SSA and South Asia standing out for their sizable employment's share in agriculture (despite an overall downward trend almost perfectly offset by service sector):
+
+```{r}
+#| label: fig-figure5
+#| column: page
+#| layout-nrow: 1
+#| fig-height: 4
+#| fig-width: 12
+#| fig-cap: "Sectoral Employment and Value Added (VA) share, by world region. Source: Author’s elaboration based on the GGDC/UNU-WIDER dataset."
+#| fig-alt: "Line chart showing the trend in the employment share in agriculture, manufacturing, and service sector in a group of 51 economies, by world region."
+
+
+plotdf <- merged_data_scatterplot |> 
+  filter(region != "Europe & Central Asia") |> 
+  group_by(year, region) |> 
+  summarize(across(ends_with(c("_agriculture", "_manuf_industry", "_manuf_ind", "_services")), mean)) |> 
+  pivot_longer(-c(year, region)) |> 
+  arrange(region, year, name) |> 
+  mutate(empl = grepl("l_", name))
+
+labs <- c("Empl % Agriculture", "Empl % Manufacturing", "Empl % Services", "VA % Agriculture", "VA % Manufacturing", "VA % Services")
+regions = c("East Asia & Pacific", "Europe & Central Asia", "Latin America & Caribbean", "Middle East & North Africa", "South Asia", "Sub-Saharan Africa")
+
+plotdf |> 
+  ggplot(aes(year, value, color = name, linetype = name)) +
+  geom_path() +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_linetype_manual(values = c(rep("dashed", 3), rep("solid", 3)), labels = labs, name = NULL) +
+  scale_color_norad(labels = labs, name = NULL) +
+  facet_grid(~factor(region)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE),
+         linetype = guide_legend(nrow = 2, byrow = TRUE)) +
+  labs(title = "Employment and value added shares by sector and region",
+       subtitle = "Percent of total employment/value added",
+       x = NULL, 
+       y = NULL) +
+  theme(legend.position = "bottom", legend.key.width = unit(2, "line"))
+```
+
+## So, what? Challenges and opportunities
+
+In recent discussions among economists and researchers, a central question has emerged: Is the manufacturing sector an inevitable progression in the development trajectory of low-income economies, or could these nations potentially achieve higher productivity growth by prioritizing the service sector instead? This question gains significant relevance, particularly in the context of economic development.
+
+The reason why manufacturing had been considered essential for growth for so long, was its ability to combine scale, innovation, and spillovers with low-skilled employment, thereby increasing productivity and large-scale job creation (a twin gain). However, the 'modern' manufacturing sector has become more skill-intensive and it seems to rely more heavily on technological innovation that favors capital over labour [@rodrik2018new]. This means that the comparative advantage of poorer economies to use relatively cheaper labour is likely to have eroded over time [@mcmillan2022labor] and the win-win scenario (productivity and job creation at scale) is not a given anymore.
+
+A second important point is linked to trade integration, global competition, and the tendency for production to be part of cross-border value chains. This puts higher demands on regulated trade with inputs and intermediary products and makes it (even) more difficult for countries with an underdeveloped business environment -- including cumbersome border controls (and corruption) - to move closer to the technology ladder and compete successfully.
+
+As for the service sector, it represents a quite heterogenous group. There are, indeed, many important differences among services, with respect to their scale, innovation, spillovers, and skill-intensity. This may have implications on both productivity and employment. While some of these services are also intertwined with the manufacturing sector and goods (there is, broadly speaking, a degree of complementarity), others can be largely driven from non-manufacturing sectors and do not require a manufacturing core to prosper. This is crucial, as increased productivity in the service sector can generate positive spillover effects across the entire economy. According to a World Bank report [@nayyar2021at] on the potential of service-led transformation, much of the growth experienced by the service sector in poor economies has been driven by low-skilled services (tradable and domestic), rather than by the global innovators services such as finance and business (despite a promising upward trend), or skill-intensive social services (education and health).
+
+### Demographic dividend
+
+Now, when we link this to the broader perspective of economic growth, it becomes even more pertinent. The demographic structures of many poor economies play a critical role in shaping future economic growth. Consider, for instance, the case of Africa, which stands out as the youngest continent globally. The substantial growth in its working-age population represents a unique window of opportunity. If harnessed effectively, this demographic advantage can translate into higher economic growth and yield what is known as a "demographic dividend". To accommodate this process, a more diversified economy and dynamic labour market are necessary.[^7] There is evidence, though, of a catch-up effect enabled by low-skill services in lower-income countries [@kinfemichael2019unconditional]. Besides, the more widespread uptake of digital technologies and the higher tradability of some of these services suggest that the potential to unfold within this broad sector is still significantly high.
+
+[^7]: While diversification is crucial to enable the conditions for decent work, it is also important to keep in mind that a high proportion of workers, in poor worldwide regions, are currently employed in the agricultural sector. It remains, therefore, crucial to improve productivity and working conditions in this sector as well [@dewan2022world].
+
+### Speeding it up
+
+The most productive services tend to offer both higher wages and better-quality jobs. What could be done to speed up the process and enable workers to be reallocated to those services?
+
+-   Given the financial constraints that governments face, designing policies that target the most promising service subsectors can make a difference, especially when they have the potential to generate higher spillover effects and benefit the entire economy. Findings from the World Bank (2021) point at global innovators and low-skill tradable services as the most relevant ones for the economy-wide production (as inputs in the value chains), by outperforming the manufacturing subsectors.
+-   Human capital also plays a key role in this, in the form of skill building, via formal education and/or in the form of training, which also translates into a better technological uptake. Investing in digital technologies and intangible capital represent another key element to strengthen the service sector, as they can be applied to different types of services (including the ones that employ low-skill workers) and may enhance both scale and scope (even more when they are closely linked to other sectors).
+-   Some services are also more suitable to be traded in international markets, opening up to a new source of comparative advantage and ensuring a larger scale, in the form, for ex. of offshore business services (i.e. IT, accounting, customer support services). This, though, requires a conducive regulatory environment, in the form of lower barriers (there are varying degrees of restrictions across the different sectors), better competition, and less regulatory burden faced by the private sector.
+
+In some specific contexts, though, this process and these changes may be harder to accomplish due to some worrying political and institutional environments. The presence of extractive political institutions (rent seeking) may, indeed, disincentivise investors who may lack trust and fear to be expropriated by the government, thereby translating into low private capital mobilization, thereby jeopardizing the existence of a dynamic and competitive environment in these countries. Similarly, the presence of political instability in some of these economies is likely to hinder and disrupt markets' actors and growth, further complicating their economic structural transformation.
+
+### Identifying the potential
+
+The past years, including the pandemic, have taught countries around the world the importance of having a dynamic, responsive, adaptable, and diversified economy to recover quickly from unexpected, potentially disruptive shocks. Identifying the potential that some of these sectors may offer represents a great opportunity for both growth and risk mitigation.

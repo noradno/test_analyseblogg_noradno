@@ -1,0 +1,73 @@
+---
+title: En oppskrift på vellykket politikk
+bibliography: library.bib
+author: 
+  - name: Nikolai Hegertun
+date: 2024-04-03
+categories:
+  - bokanmeldelse
+  - politikk
+  - bistand
+#date-modified: 2023-11-03
+---
+Hvorfor lykkes politikk noen ganger, mens det andre ganger slår helt feil? Dette spørsmålet er utgangspunktet for Dennis C. Grubes bok [«Why Governments Get It Wrong»](https://www.panmacmillan.com/authors/dennis-c-grube/why-governments-get-it-wrong/9781529083330). Som tidligere politisk taleskriver og nå professor ved Cambridge og fungerende direktør ved Bennet Institute of Public Policy, bør Grube ha peiling på tematikken.
+
+*Nikolai Hegertun er statsviter og seniorrådgiver i seksjon for statistikk og analyse.*
+
+Politiske tiltak (eller «policy») spiller en helt avgjørende rolle i alle menneskers liv, og utgjør ifølge Grube den viktigste drivkraften for endring i verden. Problemet, mener Grube, er bare at myndigheter stadig knoter det til. Det kan være snakk om tiltak mot overvekt eller hjemløshet, kriminalomsorg, smittevernstiltak, intervensjoner i Afghanistan, eller skattekutt for de aller rikeste som Storbritannias tidligere statsminister Liz Truss så vidt rakk å foreslå før hun måtte gå – alle er de eksempler på politikk som har mislyktes. Noen policyer er dødfødte fra dag én, mens andre er designet på en måte som gjør at fiaskoen oppdages først etter en stund, eller fordi rammebetingelsene har blitt endret.
+
+Det finnes imidlertid én oppskrift på hvordan man kan lykkes med policy, ifølge Grube. Den er ikke alltid like enkel å utføre, men har grunnleggende sett kun fire steg:
+
+1.  En god problemdefinisjon
+2.  En god historie (som baserer seg på problemet) folk flest kan følge
+3.  Data og evidens (fakta) som underbygger problemdefinisjonen
+4.  En effektiv intervensjon/praktisk løsning
+
+Vellykket policy er ikke bare viktig for å gjøre verden til et bedre sted, ifølge Grube, det er også viktig fordi det som regel konverteres til vellykket *politikk*: at velgere lar seg overbevise om at politikerne har gjort seg fortjent til å fortsette å styre.
+
+## Et godt problem
+
+La oss se litt nærmere på hvert steg i oppskriften. En **problemdefinisjon** er ifølge Grube en miks av ideologi, verdenssyn og et utilfredsstillende tilfang av evidens. Det er altså en subjektiv vurdering som ofte fremstilles som en objektiv analyse. Som Gruber skriver:
+
+> All problems come in pieces, and politicians try to put them together for us in ways that will make us buy into their worldview.
+
+Problemdefinisjonen er det springende punkt for å lykkes med politikkutforming ettersom den rammer inn resten av oppskriften: får man oppslutning om sin beskrivelse av et problem får man også muligheten til å utvikle policy. Mange problemer kan ligge og ulme under overflaten, nærmest som en «tilstand», og vil trenge en utløsende hendelse for å komme på dagsordenen. Det betyr imidlertid ikke at problemdefinisjonen er klar, selv om man kanskje skulle tro det. Det kan være uløste konflikter som blusser opp igjen eller etterslep på vedlikehold av viktig infrastruktur som resulterer i ulykker. Men blir man ikke enige i problembeskrivelsen vil man heller ikke komme videre til en faktisk løsning via policy.
+
+## En god historie
+
+Hvordan vi senere omtaler problemet inngår i punkt to: **historiefortellingen**. Historiefortellingen er den følelsesmessige forankringen som gir mening og en helhet til både problemet og hvordan løsningen kan se ut. Tidligere president Donald Trumps dystre historiefortelling om amerikansk forfall kan tjene som et eksempel.
+
+## Et solid faktagrunnlag
+
+Men ingen historie eller problemforståelse står seg uten **data** og **evidens**. Og motsatt: selv om et fagdirektorat som Norad liker å smykke oss med slagordet «fakta har makta», så taler data og evidens svært sjeldent for seg selv. Under pandemien var datatilfanget overveldende: det var daglige oppdateringer om antall smittede, symptomer, antall innlagte, døde etc. Likevel, som Grube illustrerer: land som Norge, Sverige, Brasil og New Zealand valgte svært ulike måter å respondere på dette faktagrunnlaget. En annen utfordring knyttet til sammenhengen mellom problemdefinisjon, historiefortelling og fakta som Grube viser til er den tidligere amerikanske utenriksministeren Colin Powells store fortelling om masseødeleggelsesvåpen som påskudd for å invadere Irak (som nettopp manglet evidens). Eller på et mikronivå: når populistiske politikere som har avfeid faren ved covid-19 selv blir svært syke og må ha behandling. Et godt evidensgrunnlag er limet i det politiske narrativet, og uten dette vil ethvert politisk initiativ omsider klappe sammen.
+
+## Effektive tiltak
+
+Det siste punktet handler om å designe en **intervensjon** som følger naturlig i tråd med problembeskrivelsen, historien og fakta. Intervensjonen er sannhetens øyeblikk for enhver beslutningstaker: Hvis problemet er upresist definert og faktaene ikke henger på greip vil intervensjonen raskt vise seg mislykket, påpeker Grube. På dette stadiet kan selvsagt en rekke problemer melde seg: implementeringen kan svikte, «handlekraftige» politikere kan hoppe på løsninger for tidlig, man kan velge løsninger som for øyeblikket er populære, men som på sikt bare gjør vondt verre (f.eks. upopulære miljøtiltak) eller man kan ende med å håndtere symptomer og ikke de underliggende problemene.
+
+Grubers bok minner oss om flere svært vellykkede policyer, hvorav noen spredte seg verden over. «Røykeloven» som vi kaller den i Norge er ett slikt eksempel. Til tross for tidlig og kortlevd motstand i mange land har slike tiltak hatt 1) en god problembeskrivelse (helseskader for millioner av røykere og passive røykere) 2) en god historie (røykerne og deres familier er *ofrene*, ikke skurkene), 3) fakta og evidens (dokumentasjon om skadevirkninger har eksistert i flere tiår) og 4) intervensjoner som virker (ikke bøter og straff, men røykfrie områder og avgifter på tobakksvarer).
+
+## Hva så for bistanden?
+
+Det er flere aspekt i Grubers bok som bør vekke interesse og muligens noen bekymringer for alle som er interessert i bistand og internasjonalt utviklingssamarbeid. Ettersom bistand er et politikkfelt som svever litt mellom hjemlig politikk, internasjonale relasjoner og andre lands politikk blir dette puslespillet ofte enda mer komplisert.
+
+En god policy er for eksempel ikke nødvendigvis en god policy for evig og alltid. Den må alltid oppdateres i tråd med konteksten og endringer i evidens. Dette kan være vanskelig for eksterne aktører som ikke sitter med hovedansvaret eller sektoransvaret i et land. Bistanden har nok en hang til å ty til policyer som har lykkes noen steder, men uten at man sikkert kan si at betingelsene for suksess er til stede andre steder (mangelen på denne lokalkunnskapen er nettopp noe av grunnen til at man tyr til internasjonale suksesser, såkalt «best practices»).
+
+Arbeidet med problemdefinisjon og historiefortelling blir også mer komplisert. Selv om det muligens er enkelt for politikere å få vedtatt bistandsprioriteringer på hjemmebane vil en betydningsfull endring «på bakken» innebære at en rekke internasjonale aktører, samt interessegrupper og eliter i andre land, må overbevises. Eller endog at det som utgjør et vellykket policy-narrativ i giverlandet langt fra vil være det som trengs i et partnerland. Evidens og data om både problem og årsaksforhold vil ofte være vanskeligere å oppnå i bistanden. Om selve intervensjonen-fasen sier Gruber eksplisitt at dette steget er «really hard». Og mange av de utfordringene han beskriver vil også forsterkes innenfor bistanden all den tid det er snakk om komplekse og dynamiske årsakskjeder som gir ulike reaksjoner og uintenderte konsekvenser som man vil slite med å ha oversikt over.
+
+### Flere fluer i en bistands-smekk…
+
+Bistandens utgangspunkt, med begrensede midler, store ambisjoner og et mangslungent aktørfelt vil i mange tilfeller bety at problemdefinisjoner vil bli omdiskutert og bestridt. Dette utgangspunktet og problemenes faktiske kompleksitet – i tillegg til de normative og giver-initierte føringene for bistanden – vil nok påvirke målene man setter for intervensjonen. Med andre ord, vil det være fristende å forsøke å slå flere fluer i en smekk med noen få tiltak fremfor at intervensjonen «matcher» problemets kompleksitet (enten dette er styresett, ulikhet, likestilling eller økonomisk utvikling). Grube minner om at flere av problemene rike land har på hjemmebane, enten dette er overvekt, alkoholmisbruk eller kriminalitet, sliter vi med å løse fordi de er sammensatt av mange faktorer (oppvekstsvilkår, skole, familierelasjoner, kulturelle normer, genetiske predisposisjoner).
+
+### …eller fokuserte innsatser?
+
+Det er likevel verdt å nevne at man gjennom internasjonalt samarbeid faktisk *har* klart å løse en rekke problemer gjennom nettopp klare og konsensusbaserte problemdefinisjoner, god evidens og fokuserte intervensjoner (f.eks. bekjempelse av malaria, HIV/AIDS og barnedødelighet). Også et mer komplisert grensesprengende problem som nedbrytningen av ozonlaget evnet verden å reversere gjennom en klar problemforståelse «alle» forsto (alvorlig sykdom hos mennesker og dyr), et godt faktagrunnlag (dokumentasjon om årsaksforhold og virkninger) og en svært effektiv intervensjon (alternativ teknologi ble gjort tilgjengelig og handelsrestriksjoner innført for de land som ikke skiftet praksis).
+
+## Treg og gradvis endring
+
+Et siste aspekt som Grube ikke går inn på i sin bok er hvordan selve demokratiet ofte fungerer som en treg og gradvis (inkrementell) policy-endrer. Noen av de viktigste bidragsyterne til litteraturen om politikkutforming, for eksempel @dahl1992politics og @lindblom1959science, har omtalt beslutningstakere som Ole Brum-aktige figurer («a bear of very little brain»), som nettopp på grunn av sine menneskelige begrensinger hva gjelder oppmerksomhet, kunnskap og analyse vil være varsomme med å ta *for* store politiske beslutninger eller foreta radikale endringer. Dagens politikere står tross alt i en lengre historisk linje, der kumulativt oppsamlet innsikt, erfaringer, kompromisser og forhandlinger, har ledet politikken i en viss retning. Ifølge en annen viktig teoretiker, Paul Pierson, gjør dette at tidligere vedtatt politikk har en tendens til å sette et mønster eller en retning som avleirer seg i stabilitet – som videre vanskeliggjør revers eller et tydelig brudd med eksisterende politikk [@pierson2004politics]. Dette er en særskilt utfordring for de som ønsker å endre bistanden, ettersom eksisterende policy i tillegg er omhyllet av et normativt slør. I tilfeller der man må velge mellom nødlidende grupper er det derfor ekstra viktig at faktagrunnlaget er solid.
+
+---
+nocite: |
+  @grube2023governments
+---

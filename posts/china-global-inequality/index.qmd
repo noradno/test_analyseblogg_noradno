@@ -1,0 +1,174 @@
+---
+title: Global inequality and the ‘China effect’
+format: html
+bibliography: library.bib
+author: 
+  - name: Carola Casti
+date: 2024-01-08
+categories:
+  - ulikhet
+  - vekst
+lightbox: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+Global inequality can be decomposed into ‘between’- and ‘within’-country inequality. What insights can we get from this decomposition? What is the role of China in the trends in global inequality, and what are the implications for developing countries? Are we doomed to grow more unequal or can things change?
+
+*Carola Casti is an economist (PhD) and Senior Adviser in the Section for Statistics and Analysis.*
+
+Is the grass greener on the other side? In some parts of the world, it definitely is. Global inequality, defined as *'inequality in real incomes between citizens of the world'* [@milanovic2005; @ravallion2018inequality] has gone through different phases in history. It is a fundamental concept that deals with progress---or setbacks---in global development and the well-being of societies worldwide.
+
+## The historical phases of global inequality
+
+Global inequality has gone through different eras over the last centuries, which have reflected different stages of international development, as shown in @fig-figure1, based on recent work by @milanovic2022, one of the pioneers in the inequality research field.
+
+-   **Phase 1** 1820--1950: Sharp increase in global inequality (Industrial revolution, WW1, Great Depression).
+
+-   **Phase 2** 1950--2000: Sustained high level of global inequality (WW2 and US dominance).
+
+-   **Phase 3** Since 2000: Sharp decrease (China's growth).
+
+```{r}
+#| label: fig-figure1
+#| column: body
+#| fig-width: 6
+#| fig-height: 3
+#| fig-cap: "Global inequality, 1820--2018. Source: @milanovic2022."
+#| fig-alt: "A line graph of the global Gini in 1820--2018, showing the three phases of global inequality."
+
+library(tidyverse)
+library(readxl)
+library(noradplot)
+
+ineq <- read_xlsx("global_ineq.xlsx", sheet = "Sheet1") |> 
+  mutate(year = as.numeric(year))
+
+ggnorad()
+
+ineq |> 
+  ggplot() +
+  geom_line(aes(year, Global)) +
+  labs(x = NULL,
+       y = "Global Gini",
+       title = "The three phases of global inequality") +
+  geom_vline(xintercept = 1950, linetype = "dashed") +
+  geom_vline(xintercept = 2000, linetype = "dashed") +
+  annotate("text", x = 1900, y = 50, label = "Phase 1") +
+  annotate("text", x = 1975, y = 50, label = "Phase 2") +
+  annotate("text", x = 2015, y = 50, label = "Phase 3") +
+  theme(plot.title = element_text(margin = margin(b = 15)))
+```
+
+Global inequality can also be disaggregated into two different components (by exploiting the exact decomposable features of the Theil index)[^1]
+
+[^1]: Milanovic uses the Theil L index, also known as mean log deviation.
+
+1.  *Between* inequality: inequality between (population-weighted) mean country incomes;
+
+2.  *Within* inequality: a (population-weighted) sum of national inequalities.[^2]
+
+[^2]: @milanovic2005 uses the terms "concept 2" and "concept 3" inequality for between and within inequality, respectively.
+
+## What drives global inequality?
+
+The two components have played a different role over time in dictating the trend in global inequality (see @fig-figure2). Initially, the *within component* (divergence in national income across individuals) was the main force. At the beginning of the 20th century, both components seemed to equally contribute to global inequality. As time went by, the *between component* has played a more crucial role in the overall trend of global inequality. Its overall decrease between 2010 and 2018 can be mainly attributed to the between component, while the within component has gradually started to rise again.[^3]
+
+[^3]: Many high-income economies were also severely impacted by the financial recession in 2008, thereby experiencing an economic slowdown. It is also important to mention that, over the period 1990--2020, the global reduction of extreme poor (2.15 USD) exceeded 800 million.
+
+```{r}
+#| label: fig-figure2
+#| column: body
+#| fig-width: 9
+#| fig-height: 4
+#| fig-cap: "Decomposition of global inequality. Source: @milanovic2022."
+#| fig-alt: "A stacked bar chart showing the evolution of the two components of global inequality."
+
+ggnorad()
+
+ineq <- read_xlsx("global_ineq.xlsx", sheet = "Sheet2") 
+
+pal <- as.character(norad_cols()[c(1, 2)])
+
+ineq |> 
+  pivot_longer(ends_with("inequality")) |> 
+  mutate(name = relevel(factor(name), "Within-country inequality")) |> 
+  ggplot() +
+  geom_col(aes(year, value, fill = name)) +
+  labs(title = "Decomposition of global inequality",
+       fill = NULL,
+       x = NULL,
+       y = "Global Theil") +
+  scale_fill_manual(values = pal, limits = c("Between-country inequality", "Within-country inequality")) +
+  scale_y_continuous(expand = c(0, 0.05)) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme(legend.position = "right", 
+        axis.text.x = element_text(angle = 45),
+        plot.title = element_text(margin = margin(b = 15)))
+  
+```
+
+## The China Effect
+
+The rise of China has been considered one of the driving forces in explaining the downward trend in global inequality in phase three, via the *between* component (@fig-figure3). Before 1978, China was a poor economy, with a real per capita GDP being only one-fortieth of the US level [@zhu2012understanding]. As it started to grow much faster than other countries, its relevance in reducing global inequality has become stronger (captured by the dark green areas below the 0, on the horizontal line). China has experienced a rapid acceleration in growth (over 8 percent annual average growth), in a relatively short period of time (2005--2018), involving one fifth of global population. The country was growing fast, and even more importantly, faster than any other economies in the world. Big improvements in highly populated countries cannot go unnoticed, nor have negligible implications for the rest of the world.
+
+```{r}
+#| label: fig-figure3
+#| column: body
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: "Marginal effect of China's growth on the 'between'-inequality component of global inequality. Source: @milanovic2022. Note: China’s growth contributed to reducing global inequality in years where the graph is below zero, and vice versa."
+#| fig-alt: "An area chart showing China's marginal contribution to global inequality via the 'between'-component, 1953-2020."
+
+gini <- read_csv("gini_marginal.csv")
+
+label1 <- "1953–1978: China is poor\nand grows more or less\nthe same as the world"
+label2 <- "1979–2019: China grows\nfaster, and this reduces\nglobal inequality"
+label3 <- "2020–: China is sufficiently\nrich that its growth no longer\nreduces global inequality"
+gini |> 
+  ggplot() +
+  geom_area(aes(year, gini_marginal), fill = norad_cols()[1]) +
+  scale_x_continuous(limits = c(1955, 2020), breaks = seq(1955, 2020, 5)) +
+  scale_y_continuous(limits = c(-0.010, 0.010)) +
+  annotate("text", x = 1962, y = 0.007, hjust = 0, label = label1) +
+  annotate("text", x = 1995, y = -0.008, hjust = 0, label = label2) +
+  annotate("text", x = 2003, y = 0.003, hjust = 0, label = label3) +
+  geom_vline(xintercept = 1978, color = norad_cols()[5], linetype = "dashed") +
+  geom_hline(yintercept = 0) +
+  labs(title = "Marginal China effect",
+       subtitle = "Annual change in global Gini due to China",
+       x = NULL,
+       y = "Change in global Gini")
+```
+
+China's unprecedent economic growth also benefited the poorest: millions of people escaped poverty. Between 2008 and 2018, 125 million of rural Chinese citizens left their spots in the global bottom quintile [@milanovic2022]. The steady and sizable increase in mean income from an extremely low starting point contributed massively to reducing the between component of inequality, and global inequality as well, meaning a higher convergence in mean income across countries. However, as its economy has expanded (with an GDP per capita, in PPP terms, exceeding the world average), China's influence on reducing global inequality has become gradually weaker, becoming nearly negligible in 2018.[^4]<sup>,</sup>[^5]
+
+[^4]: In principle, though, it could still further reduce global inequality through the within component, under the condition that future growth will be concentrated only the lowest part of the urban and rural income distribution [@milanovic2022].
+
+[^5]: Inequality calculated in PPP terms, which is the most common approach for country-living comparisons, is lower than the inequality measured in US dollars at market exchange rates.
+
+But what about the *within* component? China has also contributed to its upward trend since the 1980s including, among the others, large countries such as the US, India, Russia [@ravallion2018inequality; @milanovic2022].[^6] We can think, then, of China's pro-equality effect via the between component (mean income convergence across countries) and, at the same time, an inequality enhancing effect via the within component (between-convergence vs within-divergence). However, the impact of the between component has been stronger, meaning that China's role for the period considered, has been, overall, more beneficial than harmful in this 'equalizing' process.
+
+[^6]: See also @zhuang2016.
+
+## The reshuffling of the global bottom quantiles
+
+Its benign role for global inequality (via the between component) seems, though, to have come to an end. However, its role for the reshuffling of global income positions has been, and still is, very relevant. China's development has led to a 'migration' of the Chinese population, which does not belong anymore to the global bottom quintile. But who has taken, then, these empty slots? According to @milanovic2022, 4 out of 10 in the global bottom quartile (the poorest 25 percent of the global population) belong to the Indian subcontinent (India, Bangladesh, Pakistan). Therefore, the Chinese miracle has had important implications from a global distribution perspective by reshuffling the lowest tail. No spot in the global income distribution is static, even more in a situation where there are economies that grow considerably more than others. To provide an example, some of the rich countries' lower parts of the income distribution already shifted down in terms of their global income position. Let's take Italy as a case: according to @milanovic2022 [p. 25], between 1988 and 2018, "*the bottom Italian decile has slipped by 20 global percentiles, the second and the third by respectively six and two. The other deciles were not affected as they tend to be above the part of the global distribution where the Chinese influence has been the strongest.*"
+
+This has been also observed in countries like France and Germany (where the poorest decile has shifted down from the 81^st^ global percentile in 1993 to 75^th^ percentile in 2018). We have now a better overview of the global bottom reshuffling, but what about the composition in the global top 5 percent of the income distribution? Perhaps not surprisingly, the Global West (Western Europe, North America) plus Japan) have remained stable and anchored in their top position. Given its size and the development achieved so far, there is a risk that China's future growth may also end up fuelling global inequality, if other economies don't keep up its pace. We can think of a threshold effect above which China's growth (holding other things equal) will eventually boost global inequality. This does not mean, though, that we should advocate for some countries to stop growing, but rather that some countries need to grow more and faster.
+
+## What is the role of developing economies in all this?
+
+This likely pro-inequality role of China, via the between component, despite being relevant, does not represent, though, the main concern, from a pure (re-)distributional perspective. The between inequality component can, indeed, also be driven by the low-income countries, at the bottom of the distribution, that keep on lagging behind (even more in recent years).[^7] This is worrisome and more harmful too, from a welfare perspective. In other words, thinking about the different drivers of the between inequality component is also important: it can worsen due to many concomitant factors, with some of them being more pressing than other from a development perspective. The Indian and the African continent play an important role for the future of global inequality. They must experience a quicker and more inclusive progress, growing at a higher speed than rich economies, to avoid a divergence over time in the between component. This is easier said than done, but not impossible. Development assistance can play a role in facilitating this catch-up process, by targeting those economies that are lagging behind in this process and bring them up to speed with targeted interventions in the attempt to reduce both components of inequality.[^8]
+
+[^7]: [The World Bank has found](https://blogs.worldbank.org/developmenttalk/global-income-inequality-and-covid-19-pandemic-three-charts) a sizable increase in the between inequality and a more limited one in the within component in the emerging market and developing economies in the aftermath of Covid-19.
+
+[^8]: We may think that countries can exert a more direct control over the within component of inequality. However, it may still be relevant to closely monitor the 'between' component, as it is likely to play a more relevant role in shedding light on international migration patterns and international trade/integration.
+
+Recent shocks such as Covid-19 and the economic repercussions of the war in Ukraine are all elements that have had (and still do have) profound consequences for global inequality [@deaton2021covid; @world2022poverty] with some economies being hit disproportionally more by them. The World Bank has estimated the effect of the pandemic on the global inequality, finding that the latter has experienced the largest increase since WWII, mainly driven by the between component. Within-country inequality has increased too, despite less than what initially expected during the pandemic. It had also been showing a gradual upward trend until 2018 (@fig-figure2), suggesting the presence of wider income disparities within countries (including high-income economies).[^9]
+
+[^9]: The within-country component is, though, likely to be systematically underestimated for a number of reasons [@ravallion2018inequality]: the rich are less likely to participate in household surveys (selective compliance), making them not entirely representative of the income distribution in a given country; there are also some concerns that some income sources, especially from capital, are heavily underreported in surveys.
+
+History has taught us that very disruptive shocks have turned, at times, into opportunities to figure things out, sparking a sort of creative disruption. The unexpected growth miracle of China should also serve as a powerful reminder that, despite the many challenges ahead, outstanding positive development paths can still emerge.

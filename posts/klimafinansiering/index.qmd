@@ -1,0 +1,148 @@
+---
+title: Klimafinansieringen øker, men det er langt igjen til hva som trengs
+format: html
+embed-resources: true
+author: 
+  - name: Einar Tornes
+categories: 
+  - bistand
+  - statistikk
+  - klima
+date: 2023-11-30
+bibliography: library.bib
+execute:
+  echo: false
+  message: false
+  warning: false
+  results: 'hide'
+---
+
+*Einar Tornes er statsviter og seniorrådgiver i seksjon for statistikk og analyse.*
+
+Oppdaterte tall fra OECD gir status på de industrialiserte landenes klimafinansiering til utviklingslandene, som har store finansieringsbehov. Klimafinansieringen økte i 2021, men to utfordringer peker seg særlig ut: mobilisering av private investeringer og finansiering til klimatilpasning.
+
+Forpliktelsen om 100 milliarder dollar årlig fra industrialiserte land[^1] utgjør en liten, men viktig brøkdel av utviklingslandenes finansieringsbehov for å investere i lavutslippsutvikling, tilpasse seg og være robuste mot klimaendringer. Utviklingslandene består av spekteret fra lavinntektsland til høyere mellominntektsland. Et grovt anslag på utviklingslandenes totale behov for internasjonal (ekstern) klimafinansering er om lag 1 000 milliarder dollar per år [@songwe2022finance].[^2] Den største andelen av dette må komme fra private kilder.[^3]
+
+[^1]: På COP15 i 2009 forpliktet de industrialiserte landene seg til å samlet bidra med 100 milliarder dollar i klimafinansiering til utviklingsland per år innen 2020. Senere har forpliktelsen blitt bekreftet og forlenget til å gjelde frem til 2025, da et nytt mål skal være fremforhandlet.
+
+[^2]: I dette anslaget er Kina holdt utenfor.
+
+[^3]: Internasjonale (eksterne) finansieringskilder er bredden av offentlige og private kilder fra både industrialiserte land og utviklingsland. Offentlige finansieringskilder inkluderer stater (bilaterale) så vel som utviklingsbankene (multilaterale).
+
+## 100-milliardersmålet nås etter fristen
+
+Finansieringsforpliktelsen ble ikke innfridd innen fristen i 2020. OECD, som måler og analyserer fremgang mot 100-milliardermålet, har i forkant av klimatoppmøtet i Dubai publisert en statusrapport med nye tall for 2021 [@oecd2023climate]. I 2021 økte klimafinansieringen[^4] til 89,6 milliarder dollar, og det manglet dermed vel 10 milliarder. Økningen var likevel høyere enn forventet. OECD anslår at målet ble nådd i 2022, to år forsinket, men offisielle tall publiseres først neste år. Klimafinansieringen fra Norge var 8,3 milliarder kroner (nær 1 milliard dollar).[^5]
+
+[^4]: Komponentene i klimafinansiering fra industrialiserte land er bilateral klimafinansiering, multilateral klimafinansiering (attribuert til industrialiserte land), klimarelatert eksportkreditt og mobilisert privat klimafinansiering (attribuert til industrialiserte land).
+
+[^5]: I 2022 [økte norsk klimafinansiering til 15,5 milliarder kroner](https://www.regjeringen.no/no/aktuelt/dobla-klimafinansieringa-fire-ar-for-fristen/id2993012/) (1,6 milliarder dollar).
+
+```{r}
+#| label: fig-figure1
+#| fig-alt: "Klimafinansiering fordelt på kilde (offentlig/privat), som viser at veksten i finansiering de siste seks årene har kommet fra offentlige midler."
+#| column: body 
+#| fig-height: 5
+#| fig-width: 8
+#| fig-cap: 'Klimafinansiering fordelt på kilde. Kilde: Basert på data fra @oecd2023climate.'
+
+library(tidyverse)
+library(noradplot)
+library(scales)
+library(geomtextpath)
+library(showtext)
+
+showtext_auto()
+showtext_opts(dpi = 200)
+
+ggnorad()
+
+clim_source <- read_csv2("climate_finance_source.csv") |> 
+  mutate(source = ifelse(source == "Annet", "Eksportkreditt", source),
+         source = str_replace(source, "klimafinansiering", "finansiering"))
+  
+levels <- rev(c("Offentlig finansiering", "Privat finansiering mobilisert av offentlige midler", "Eksportkreditt"))
+pal <- rev(as.character(norad_cols()[c(1, 2, 3)]))
+
+clim_source |>
+  group_by(year) |> 
+  mutate(total = ifelse(source == "Eksportkreditt", usd_bln[source == "Total"], NA)) |>
+  ungroup() |> 
+  filter(source != "Total") |> 
+  mutate(source = factor(source, levels = levels),
+         year = factor(year)) |> 
+  ggplot() +
+  geom_col(aes(year, usd_bln, fill = source)) +
+  geom_texthline(yintercept = 100, label = "100-milliardersmålet fra COP15") +
+  scale_y_continuous(expand = c(0, 0.05), limits = c(0, 110)) +
+  scale_fill_manual(values = pal) +
+  geom_text(aes(year, total + 5, label = total), size = 5) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(fill = NULL,
+       title = "Klimafinansiering fra industrialiserte land",
+       subtitle = "Milliarder USD, etter kilde, 2016–2021",
+       x = NULL,
+       y = "Milliarder USD") +
+  theme(legend.position = "bottom")
+
+```
+
+## Utfordringer og lyspunkter
+
+Det er særlig to vedvarende utfordringer, som også bekreftes i 2021-tallene. Det handler om mobilisering av private investeringer og finansiering til klimatilpasning.
+
+Offentlig klimafinansiering er ikke effektiv nok til å utløse private investeringer. Den samlede økningen de siste årene er drevet av økt offentlig klimafinansiering. Privat klimafinansiering utløst av offentlig klimafinansiering inngår i rapporteringen av klimafinansiering fra industrialiserte land. Selv om det er utløst private investeringer, særlig til utslippsreduksjon innen energisektoren i mellominntektsland, er bidraget lavere enn antatt, og har stagnert etter 2017 [@oecd2023scalingmobilisation]. Det er de multilaterale utviklingsbankene som utløser mest private investeringer. Gjennom sin sterke finansielle stilling har de mulighet til å låne inn billig i kapitalmarkeder og på den måten øke sine subsidierte utlån. Et diskusjonstema er om utviklingsbankene i enda større grad skal brukes for å utløse mer finansiering.[^6] En annen utfordring er at investeringene i for liten grad er rettet mot klimatilpasning og de mest fattige landene, samtidig som disse landene har størst finansieringsbehov som andel av sine økonomier.
+
+[^6]: Denne diskusjonen handler også om hvorvidt tilførselen av kapital fra (de statlige) aksjonærene, som er hovedfundamentet for utviklingsbankenes finansielle stilling, skal økes framover.
+
+Finansiering til klimatilpasning forblir på et lavt nivå, både i beløp og som andel av samlet finansiering [@oecd2023scalingadaptation]. Tilstrekkelig finansiell kapasitet til klimatilpasning er en hovedbekymring for mange utviklingsland, og et av målene i Parisavtalen er balanse mellom finansiering til tilpasning og utslippsreduksjon.[^7] I 2021 falt finansieringen til ren klimatilpasning med 4 milliarder dollar. Ren klimatilpasning ekskluderer imidlertid aktiviteter som kombinerer tilpasning og utslippsreduksjon.
+
+[^7]: Det er ikke klart definert hvordan målsettingen om balanse skal forstås kvantitativt. Ambisjonen for økning til tilpasning ble i Glasgow (COP26) til en felles forpliktelse om å doble finansieringen til klimatilpasning.
+
+```{r}
+#| label: fig-figure2
+#| fig-alt: "Klimafinansiering fordelt på formål, som viser at det har vært en økning i finansiering til tilpasning de siste seks årene."
+#| column: body 
+#| fig-height: 5
+#| fig-width: 8
+#| fig-cap: "Klimafinansiering fordelt på formål. Kilde: Basert på data fra @oecd2023scalingadaptation."
+
+ggnorad()
+
+clim_type <- read_csv2("climate_finance_type.csv") |> 
+  mutate(type = case_match(type, 
+                           "Adaptation" ~ "Tilpasning",
+                           "Mitigation" ~ "Utslippsreduksjon",
+                           "Cross-cutting" ~ "Tverrgående",
+                           .default = "Total"))
+
+levels <- rev(c("Utslippsreduksjon", "Tverrgående", "Tilpasning"))
+pal <- rev(as.character(norad_cols()[c(9, 11, 10)]))
+
+clim_type |>
+  group_by(year) |> 
+  mutate(total = ifelse(type == "Tilpasning", usd_bln[type == "Total"], NA)) |>
+  ungroup() |> 
+  filter(type != "Total") |> 
+  mutate(type = factor(type, levels = levels),
+         year = factor(year)) |> 
+  ggplot() +
+  geom_col(aes(year, usd_bln, fill = type)) +
+  geom_texthline(yintercept = 100, label = "100-milliardersmålet fra COP15") +
+  scale_y_continuous(expand = c(0, 0.05), limits = c(0, 110)) +
+  scale_fill_manual(values = pal) +
+  geom_text(aes(year, total + 5, label = total), size = 5) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(fill = NULL,
+       title = "Klimafinansiering fra industrialiserte land",
+       subtitle = "Milliarder USD, etter formål, 2016–2021",
+       x = NULL,
+       y = "Milliarder USD") +
+  theme(legend.position = "bottom")
+
+```
+
+Samtidig er det også flere positive utviklingstrekk. De siste årene har andelen samlet klimafinansiering til de landene som er mest fattige og sårbare for klimaendringer økt noe, selv om nivået fremdeles er lavt. Et annet lyspunkt er at gavefinansieringen økte noe i 2021. Likevel står lån fremdeles for over to tredeler av den offentlige klimafinansieringen.
+
+## Mye gjenstår
+
+I klimaforhandlingene fremover blir samlet ambisjonsnivå for klimafinansiering et hovedtema, og ikke minst hvordan ambisjonene skal realiseres. I tillegg til spørsmålene om bidrag fra industrialiserte land og hvordan privat kapital kan bidra mer, vil et spørsmål være om økte ambisjoner også skal omfatte bidrag fra høyere mellominntektsland. Et viktig spørsmål blir også fordelingen mellom tilpasning og utslippsreduksjon.
